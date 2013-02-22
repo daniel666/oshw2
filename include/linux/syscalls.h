@@ -691,7 +691,8 @@ asmlinkage long sys_ppoll(struct pollfd __user *, unsigned int,
 			  size_t);
 asmlinkage long sys_pipe2(int __user *, int);
 asmlinkage long sys_pipe(int __user *);
-
+asmlinkage long sys_set_colors();
+asmlinkage long sys_get_colors(int i);
 int kernel_execve(const char *filename, char *const argv[], char *const envp[]);
 
 #endif
