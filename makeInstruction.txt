@@ -1,0 +1,18 @@
+        make ARCH=x86 CC="${CROSS_COMPILE}gcc -mno-android" goldfish_defconfig
+    
+Finally, you can compile the kernel using the command:
+        make ARCH=x86 CC="${CROSS_COMPILE}gcc -mno-android" bzImage
+
+
+--
+
+git clone ym2394@sp13-w4118-git.cs.columbia.edu:group18
+2CrawlYe
+
+
+--
+emulator @w4118
+
+--
+
+mount -o rw,remount -t yaffs2 /dev/block/mtdblock3 /system
