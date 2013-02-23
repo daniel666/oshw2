@@ -3,6 +3,7 @@
 #include <linux/syscalls.h>
 
 //TESTESTTEST
+//////////
 /*
 asmlinkage long sys_set_colors()
 {
