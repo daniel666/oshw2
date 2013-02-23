@@ -1,6 +1,8 @@
 #include <linux/linkage.h>
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
+
+//TESTESTTEST
 /*
 asmlinkage long sys_set_colors()
 {
