@@ -1439,8 +1439,8 @@ long do_fork(unsigned long clone_flags,
 			set_tsk_thread_flag(p, TIF_SIGPENDING);
 			__set_task_state(p, TASK_STOPPED);
 		} else {
-			wake_up_new_task(p, clone_flags);
-		}
+                           wake_up_new_task(p, clone_flags);
+               }
 
 		tracehook_report_clone_complete(trace, regs,
 						clone_flags, nr, p);
@@ -1454,6 +1454,11 @@ long do_fork(unsigned long clone_flags,
 			wait_for_completion(&vfork);
 			freezer_count();
 			tracehook_report_vfork_done(p, nr);
+                        /*
+                         * set the color to 0 when upstream call is vfork. i.e, Q:SIGCHLD
+                         */
+                         p->color=0;
+
 		}
 	} else {
 		nr = PTR_ERR(p);

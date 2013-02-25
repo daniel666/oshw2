@@ -1,9 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <linux/unistd.h>
-#include <sys/syscall.h>
-
-int main (){
-	syscall(251);
+#include<unistd.h>
+#include<sys/syscall.h>
+#define set_colors 223
+#define get_colors 251
+int main()
+{
+   printf("User space call start: ready to call sys %d\n",set_colors);
+   syscall(set_colors);
+   printf("User space call end\n");
+   printf("User space call start: ready to call sys %d\n",get_colors);
+   syscall(get_colors);
+   printf("User space call end\n");
 }
-

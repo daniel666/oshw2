@@ -222,7 +222,7 @@ ENTRY(sys_call_table)
 	.long sys_getdents64	/* 220 */
 	.long sys_fcntl64
 	.long sys_ni_syscall	/* reserved for TUX */
-	.long sys_ni_syscall
+	.long sys_set_colors
 	.long sys_gettid
 	.long sys_readahead	/* 225 */
 	.long sys_setxattr
@@ -250,7 +250,7 @@ ENTRY(sys_call_table)
 	.long sys_io_submit
 	.long sys_io_cancel
 	.long sys_fadvise64	/* 250 */
-	.long sys_ni_syscall
+	.long sys_get_colors
 	.long sys_exit_group
 	.long sys_lookup_dcookie
 	.long sys_epoll_create
@@ -332,5 +332,3 @@ ENTRY(sys_call_table)
 	.long sys_dup3			/* 330 */
 	.long sys_pipe2
 	.long sys_inotify_init1
-	.long sys_get_colors
-	.long sys_set_colors
