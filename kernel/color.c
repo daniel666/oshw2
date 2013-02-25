@@ -2,38 +2,18 @@
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
 #include <linux/cred.h>
-//TESTESTTEST
-/*
-asmlinkage long sys_set_colors()
+#include <linux/types.h>
+
+void print_int_2d(int *arr, int n)
 {
-	printk("Hello from set color!\n");
+   int i;
+   for(i=0; i<n; i++){
+      printk("%d ", arr[i]);
+   }
 }
 
-asmlinkage long sys_get_colors(int i)
+SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, int *, retval)
 {
-	printk("Hello from get color with number %d\n",i);
-}*/
-asmlinkage long sys_set_colors(void)
-{
-	printk(KERN_DEBUG "Hello from set color printk!\n");
-	return 0;
-}
-
-/*SYSCALL_DEFINE0(set_colors)
-{
-	printk(KERN_DEBUG "Hello from set color printk!\n");
-	return 0;
-}*/
-SYSCALL_DEFINE0(get_colors)
-{
-	printk("Hello from set color!\n");
-	return 0;
-}
-
-
-/*
- SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, int *, retval)
- {
       pid_t  kpids[nr_pids];
       u_int16_t kcolors[nr_pids];
       int   kretval[nr_pids];
@@ -65,7 +45,7 @@ SYSCALL_DEFINE0(get_colors)
                   kretval[i] = 0;
                   write_unlock_irqstore(&thread_task->tasklist_lock, flags);
             }
--------------------------------------------------------------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------------------------------------------------------
 Maybe I don't need this part
 
             list_for_each(child,&task->children){
@@ -91,7 +71,7 @@ Maybe I don't need this part
                         }
                   }
             }
- ------------------------------------------------------------------------------------------------------------------------------------
+ ------------------------------------------------------------------------------------------------------------------------------------*/
       }
       if(copy_to_user(retval,kretval, sizeof(nr_pids)))
             return -EFAULT;
@@ -127,4 +107,3 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       if(copy_to_user(retval,kretval, sizeof(nr_pids)))
             return -EFAULT;
 }
-*/
