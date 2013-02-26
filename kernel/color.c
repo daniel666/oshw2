@@ -63,12 +63,12 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       for(i=0;i<nr_pids;i++){
             struct task_struct *tmp_task;
             struct task_struct *task;
-            struct task_struct * thread_task;
+            struct task_struct *thread_task;
             pid_t  tgid;
 
             //need to lock pid???
             tmp_task = find_task_by_vpid(kpids[i]);
-            if(!task){
+            if(!tmp_task){
                    kretval[i]=-EINVAL;
                    printk("Found no task by %d\n", kpids[i]);
                    continue;
@@ -77,13 +77,13 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             if(debug)
                   print_task(tmp_task);
 
-            continue;
             write_lock_irq(&tasklist_lock);
             do_each_thread(task, thread_task){
                   if(thread_task->tgid = tgid){
                   //unsigned long flags=0;
                   //write_lock_irqsave(&lock, flags);
                         thread_task->color = kcolors[i];
+                        printk("pid %d get color %d", thread_task->pid,thread_task->color);
                         kretval[i] = 0;
                   //write_unlock_irqrestore(&lock, flags);
                   }
@@ -120,6 +120,8 @@ Maybe I don't need this part
       if(copy_to_user(retval,kretval, sizeof(int)*nr_pids))
             return -EFAULT;
       print_pids(retval, nr_pids, "retval:");
+
+      return 0;
 }
 
 SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, int *, retval)
@@ -128,7 +130,6 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       u_int16_t kcolors[nr_pids];
       int   kretval[nr_pids];
       int   i;
-      struct task_struct *task;
       struct task_struct *sibling_entry;
       struct task_struct *child_entry;
       struct list_head* sibling;
@@ -144,19 +145,30 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             print_pids(kpids, nr_pids, "Output kpids:");
       }
 
-      return 0;
       for(i=0; i<nr_pids; i++){
+            struct task_struct *task;
+
             task = find_task_by_vpid(kpids[i]);
             if(!task){
                    kretval[i]=-EINVAL;
                    continue;
             }
-            unsigned long flags;
-            read_lock_irqsave(&lock, flags);
+            if(debug)
+                  print_task(task);
+
+            //unsigned long flags;
+            //read_lock_irqsave(&lock, flags);
+            read_lock_irq(&tasklist_lock);
             kcolors[i] = task->color;
+            printk("fetch pid %d with color %d" task->pid, task->color);
             kretval[i] = 0;
-            read_unlock_irqrestore(&lock, flags);
+            read_unlock_irq(&tasklist_lock);
+            //read_unlock_irqrestore(&lock, flags);
       }
+      print_colors(kcolors, nr_pids, "get colors:");
+      print_pids(kretval, nr_pids, "retval:");
       if(copy_to_user(retval,kretval, sizeof(int)*nr_pids))
             return -EFAULT;
+
+      return 0;
 }
