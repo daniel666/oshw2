@@ -19,6 +19,6 @@ int main()
    u_int16_t   ret_colors[nr_pids];
    int   retval2[nr_pids];
    printf("User space call start: ready to call sys %d\n",get_colors);
-   syscall(get_colors, nr_pids, pids, ret_colors, retval);
+   syscall(get_colors, nr_pids, pids, ret_colors, retval2);
    printf("User space call end\n");
 }
