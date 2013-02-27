@@ -6,13 +6,12 @@
 #define get_colors 251
 int main()
 {
-   #define nr_pids  3
+   #define nr_pids  5
 
    //pid_t    pids[nr_pids] = {22511,22589, 23542, 25043,25219};
-   pid_t    pids[nr_pids] = {1,2,3};
-   u_int16_t   colors[nr_pids] = {1, 2, 3};
+   pid_t    pids[nr_pids] = {1,2,3,6,7};
+   u_int16_t   colors[nr_pids] = {1, 2, 3, 4,5};
    int retval[nr_pids];
-
    printf("User space call start: ready to call sys %d\n",set_colors);
    syscall(set_colors, nr_pids, pids, colors, retval);
    printf("User space call end\n");

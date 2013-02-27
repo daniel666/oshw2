@@ -5,12 +5,14 @@
 #include <linux/types.h>
 #include <linux/sched.h>
 #include <asm/uaccess.h>
+#include <linux/pid.h>
 #define debug 1
 void print_task(struct task_struct* tsk)
 {
       printk("-------Task------\n");
       printk("pid: %d\n", tsk->pid);
       printk("tgid: %d\n",tsk->tgid);
+      printk("name: %s\n",tsk->comm);
       printk("-------End------\n");
 }
 void print_int(int *arr, int n, char* message)
@@ -28,7 +30,7 @@ void print_u_int16(u_int16_t *arr, int n, char* message)
    int i;
    if(message)
          printk("%s:", message);
-   for(i=0; i<n; i++)   {
+   for(i=0; i<n; i++){
       printk("%d ", arr[i]);
    }
    printk("\n");
@@ -41,25 +43,27 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       u_int16_t kcolors[nr_pids];
       int   kretval[nr_pids] ;
       int   i;
-      struct task_struct *sibling_entry;
-      struct task_struct *child_entry;
-      struct list_head* sibling;
-      struct list_head* child;
+      bool  fail_flag=false;
 
-      if(!(pids&&colors&&retval)||nr_pids<=0)
-             return -1;
+      printk("\n\n\n-----SET_COLORS------\n");
+      if(!(pids&&colors&&retval)||nr_pids<=0){
+            printk("Illegal\n");
+            return -1;
+      }
       //if not root, return error
-      if(debug)
-            printk("UID: %d\n", current->real_cred->uid);
+      /*if(debug)
+            printk("UID: %d\n", current->real_cred->uid)
       if(current->real_cred->uid)
+            return -EACCES;*/
+      if(current->cred->uid)
             return -EACCES;
+      printk("UID: %d\n", current->cred->uid);
       if(copy_from_user(kpids, pids, sizeof(pid_t)*nr_pids))
             return -EFAULT;
       if(copy_from_user(kcolors, colors, sizeof(u_int16_t)*nr_pids))
             return -EFAULT;
 
       if(debug){
-            printk("-----SET_COLORS------\n");
             print_int(kpids, nr_pids, "Output kpids:");
             print_u_int16(kcolors, nr_pids, "Output kcolor:");
       }
@@ -70,10 +74,13 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             pid_t  tgid;
 
             //need to lock pid???
-            tmp_task = find_task_by_vpid(kpids[i]);
+            //tmp_task = find_task_by_vpid(kpids[i]);
+            //tmp_task = pid_task(find_vpid(kpids[i]), PIDTYPE_PID);
+            tmp_task = pid_task(find_get_pid(kpids[i]), PIDTYPE_PID);
             if(!tmp_task){
                    kretval[i]=-EINVAL;
                    printk("Found no task by %d\n", kpids[i]);
+                   fail_flag=true;
                    continue;
             }
             tgid =tmp_task->tgid;
@@ -96,6 +103,7 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             return -EFAULT;
       print_int(retval, nr_pids, "retval:");
 
+      if(fail_flag) return -1;
       return 0;
 }
 
@@ -105,16 +113,12 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       u_int16_t kcolors[nr_pids];
       int   kretval[nr_pids];
       int   i;
-      struct task_struct *sibling_entry;
-      struct task_struct *child_entry;
-      struct list_head* sibling;
-      struct list_head* child;
       pid_t  tgid;
+      bool  fail_flag=false;
 
-      printk("-----GET_COLORS------\n");
+      printk("\n-----GET_COLORS------\n");
       if(!(pids&&colors&&retval)||nr_pids<=0)
             return -1;
-
 
       if(copy_from_user(kpids, pids, sizeof(pid_t)*nr_pids))
             return -EFAULT;
@@ -129,6 +133,7 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             task = find_task_by_vpid(kpids[i]);
             if(!task){
                    kretval[i]=-EINVAL;
+                   fail_flag=true;
                    continue;
             }
             if(debug)
@@ -149,5 +154,6 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       if(copy_to_user(retval,kretval, sizeof(int)*nr_pids))
             return -EFAULT;
 
+      if(fail_flag) return -1;
       return 0;
 }
