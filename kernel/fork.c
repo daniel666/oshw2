@@ -1141,6 +1141,12 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 
 	p->pid = pid_nr(pid);
 	p->tgid = p->pid;
+        p->color=current->color;
+        /*
+         * set the color to 0 when upstream call is vfork. i.e, Q:SIGCHLD
+         */
+        if(clone_flags& CLONE_VFORK)
+                p->color = 0;
 	if (clone_flags & CLONE_THREAD)
 		p->tgid = current->tgid;
 
@@ -1454,10 +1460,6 @@ long do_fork(unsigned long clone_flags,
 			wait_for_completion(&vfork);
 			freezer_count();
 			tracehook_report_vfork_done(p, nr);
-                        /*
-                         * set the color to 0 when upstream call is vfork. i.e, Q:SIGCHLD
-                         */
-                         p->color=0;
 
 		}
 	} else {
