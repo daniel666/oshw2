@@ -88,16 +88,20 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
                   print_task(tmp_task);
 
             write_lock_irq(&tasklist_lock);
-            do_each_thread(task, thread_task){
-                  if(thread_task->tgid == tgid){
-                  //unsigned long flags=0;
-                  //write_lock_irqsave(&lock, flags);
-                        thread_task->color = kcolors[i];
-                        kretval[i] = 0;
-                  //write_unlock_irqrestore(&lock, flags);
-                  }
-            }while_each_thread(task, thread_task);
-            write_unlock(&tasklist_lock);
+//            do_each_thread(task, thread_task){
+//                  if(thread_task->tgid == tgid){
+//                        thread_task->color = kcolors[i];
+//                        kretval[i] = 0;
+//                  }
+//            }while_each_thread(task, thread_task);
+           thread_task = task;
+           do{
+                  thread_task->color = kcolors[i];
+                  kretval[i] = 0;
+           }while_each_thread(task, thread_task); //note this macro iterates all threads in the thread_group cos it.\
+                                                   we don't need to test if tgid are equal, it's semantically in the macro
+
+            write_unlock_irq(&tasklist_lock);
       }
       if(copy_to_user(retval,kretval, sizeof(int)*nr_pids))
             return -EFAULT;
@@ -141,10 +145,10 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
 
             //unsigned long flags;
             //read_lock_irqsave(&lock, flags);
-            read_lock_irq(&tasklist_lock);
+            read_lock(&tasklist_lock);
             kcolors[i] = task->color;
             kretval[i] = 0;
-            read_unlock_irq(&tasklist_lock);
+            read_unlock(&tasklist_lock);
             //read_unlock_irqrestore(&lock, flags);
       }
       if(debug){
