@@ -79,7 +79,7 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
 
             write_lock_irq(&tasklist_lock);
             do_each_thread(task, thread_task){
-                  if(thread_task->tgid = tgid){
+                  if(thread_task->tgid == tgid){
                   //unsigned long flags=0;
                   //write_lock_irqsave(&lock, flags);
                         thread_task->color = kcolors[i];
@@ -138,8 +138,10 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
 
       printk("-----GET_COLORS------\n");
 
-      if(copy_from_user(kpids, pids, sizeof(pid_t)*nr_pids))
+      if(copy_from_user(kpids, pids, sizeof(pid_t)*nr_pids)) {
+	    printk("[color.c] copy_from_user error\n");
             return -EFAULT;
+	}
 
       if(debug){
             print_pids(kpids, nr_pids, "Output kpids:");
@@ -160,15 +162,17 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             //read_lock_irqsave(&lock, flags);
             read_lock_irq(&tasklist_lock);
             kcolors[i] = task->color;
-            printk("fetch pid %d with color %d" task->pid, task->color);
+            printk("fetch pid %d with color %d", task->pid, task->color);
             kretval[i] = 0;
             read_unlock_irq(&tasklist_lock);
             //read_unlock_irqrestore(&lock, flags);
       }
       print_colors(kcolors, nr_pids, "get colors:");
       print_pids(kretval, nr_pids, "retval:");
-      if(copy_to_user(retval,kretval, sizeof(int)*nr_pids))
+      if(copy_to_user(retval,kretval, sizeof(int)*nr_pids)) {
+	    printk("[color.c] copy_to_user error\n");
             return -EFAULT;
+	}
 
       return 0;
 }
