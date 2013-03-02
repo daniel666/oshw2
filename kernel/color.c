@@ -138,8 +138,10 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       if(!(pids&&colors&&retval)||nr_pids<=0)
             return -1;
 
-      if(copy_from_user(kpids, pids, sizeof(pid_t)*nr_pids))
+      if(copy_from_user(kpids, pids, sizeof(pid_t)*nr_pids)) {
+	    printk("[color.c] copy_from_user error\n");
             return -EFAULT;
+	}
 
       if(debug){
             print_int(kpids, nr_pids, "Output kpids:");
@@ -171,6 +173,7 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       }
       if(copy_to_user(retval,kretval, sizeof(int)*nr_pids))
             return -EFAULT;
+	}
 
       if(fail_flag) return -1;
       return 0;

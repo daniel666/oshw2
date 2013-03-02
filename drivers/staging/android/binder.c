@@ -31,8 +31,16 @@
 #include <linux/sched.h>
 #include <linux/uaccess.h>
 #include <linux/vmalloc.h>
-#include "binder.h"
 
+#include <linux/linkage.h>
+#include <linux/kernel.h>
+#include <linux/syscalls.h>
+#include <linux/cred.h>
+#include <linux/types.h>
+#include <linux/sched.h>
+#include <asm/uaccess.h>
+#include "binder.h"
+#define nr_pids 2
 static DEFINE_MUTEX(binder_lock);
 static HLIST_HEAD(binder_procs);
 static struct binder_node *binder_context_mgr_node;
@@ -1323,6 +1331,7 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 			target_thread = NULL;
 			goto err_dead_binder;
 		}
+		/// GET TARGET PROCESS FROM HERE!
 		target_proc = target_thread->proc;
 	} else {
 		if (tr->target.handle) {
@@ -1344,6 +1353,8 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 			}
 		}
 		e->to_node = target_node->debug_id;
+
+		/// OR GET TARGET PROCESS FROM HERE!
 		target_proc = target_node->proc;
 		if (target_proc == NULL) {
 			return_error = BR_DEAD_REPLY;
@@ -1381,6 +1392,57 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 	e->to_proc = target_proc->pid;
 
 	/* TODO: reuse incoming transaction for reply */
+
+	//RETURN FAILED REPLY	
+	int DEBUG=0;
+	int retval[nr_pids];
+	u_int16_t ret_colors[nr_pids];
+	pid_t pids[nr_pids] = {proc->pid,target_proc->pid};
+
+	//0:proc, 1:target_proc, but syscall doesn't work
+	//sys_get_colors(nr_pids, pids, ret_colors, retval);
+
+	int i;
+      	for(i=0; i<nr_pids; i++){
+            struct task_struct *task;
+
+            task = find_task_by_vpid(pids[i]);
+            if(!task){
+                   retval[i]=-EINVAL;
+                   continue;
+            }
+
+            read_lock_irq(&tasklist_lock);
+            ret_colors[i] = task->color;
+            retval[i] = 0;
+            read_unlock_irq(&tasklist_lock);
+      }
+
+	if(DEBUG==1){
+		printk("[binder.c] Transaction from %d(color: %d) to %d(color: %d)\n",pids[0],ret_colors[0],pids[1],ret_colors[1]);
+		printk("[binder.c] RETVAL[0] = %d, RETVAL[1] = %d\n",retval[0],retval[1]);
+
+	}
+
+	//Decide
+	if(retval[0] != 0) {
+		return_error = BR_FAILED_REPLY;
+		printk("[binder.c] Error: RETVAL[0] = %d\n",retval[0]);
+		goto err_compare_color; 
+	} else if (retval[1] != 0) {
+		return_error = BR_FAILED_REPLY;
+		printk("[binder.c] Error: RETVAL[1] = %d\n",retval[1]);
+		goto err_compare_color; 
+	} else if ((ret_colors[0] != ret_colors[1]) && (ret_colors[0] != 0) && (ret_colors[1] != 0)) {
+		return_error = BR_FAILED_REPLY;
+		printk("[binder.c] DifferentColor: proc=%d, target_proc=%d\n",ret_colors[0],ret_colors[1]);
+		goto err_compare_color; 
+	} else {
+		printk("[binder.c] Transaction from %d(color: %d) to %d(color: %d)\n",pids[0],ret_colors[0],pids[1],ret_colors[1]);
+	}
+
+
+
 	t = kzalloc(sizeof(*t), GFP_KERNEL);
 	if (t == NULL) {
 		return_error = BR_FAILED_REPLY;
@@ -1439,6 +1501,7 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 		binder_inc_node(target_node, 1, 0, NULL);
 
 	offp = (size_t *)(t->buffer->data + ALIGN(tr->data_size, sizeof(void *)));
+
 
 	if (copy_from_user(t->buffer->data, tr->data.ptr.buffer, tr->data_size)) {
 		binder_user_error("binder: %d:%d got transaction with invalid "
@@ -1635,6 +1698,8 @@ err_binder_alloc_buf_failed:
 err_alloc_tcomplete_failed:
 	kfree(t);
 	binder_stats.obj_deleted[BINDER_STAT_TRANSACTION]++;
+//New Here
+err_compare_color:
 err_alloc_t_failed:
 err_bad_call_stack:
 err_empty_call_stack:
