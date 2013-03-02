@@ -25,13 +25,23 @@ void print_int(int *arr, int n, char* message)
    }
    printk("\n");
 }
+void print_pids(pid_t *arr, int n, char* message)
+{
+   int i;
+   if(message)
+         printk("%s:", message);
+   for(i=0; i<n; i++)   {
+      printk("%hu ", arr[i]);
+   }
+   printk("\n");
+}
 void print_u_int16(u_int16_t *arr, int n, char* message)
 {
    int i;
    if(message)
          printk("%s:", message);
    for(i=0; i<n; i++){
-      printk("%d ", arr[i]);
+      printk("%hu ", arr[i]);
    }
    printk("\n");
 }
@@ -64,7 +74,7 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             return -EFAULT;
 
       if(debug){
-            print_int(kpids, nr_pids, "Output kpids:");
+            print_pids(kpids, nr_pids, "Output kpids:");
             print_u_int16(kcolors, nr_pids, "Output kcolor:");
       }
       for(i=0;i<nr_pids;i++){
