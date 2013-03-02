@@ -53,7 +53,6 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       u_int16_t kcolors[nr_pids];
       int   kretval[nr_pids] ;
       int   i;
-      bool  fail_flag=false;
 
       printk("\n\n\n-----SET_COLORS------\n");
       if(!(pids&&colors&&retval)||nr_pids<=0){
@@ -92,7 +91,6 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             if(!task){
                    kretval[i]=-EINVAL;
                    printk("Found no task by %d\n", kpids[i]);
-                   fail_flag=true;
                    continue;
             }
             tgid =task->tgid;
@@ -121,7 +119,6 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             return -EFAULT;
       print_int(retval, nr_pids, "retval:");
 
-      if(fail_flag) return -1;
       return 0;
 }
 
@@ -132,7 +129,6 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       int   kretval[nr_pids];
       int   i;
       pid_t  tgid;
-      bool  fail_flag=false;
 
       printk("\n-----GET_COLORS------\n");
       if(!(pids&&colors&&retval)||nr_pids<=0)
@@ -153,7 +149,6 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             task = find_task_by_vpid(kpids[i]);
             if(!task){
                    kretval[i]=-EINVAL;
-                   fail_flag=true;
                    continue;
             }
             if(debug)
@@ -173,8 +168,9 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       }
       if(copy_to_user(retval,kretval, sizeof(int)*nr_pids))
             return -EFAULT;
-	}
 
-      if(fail_flag) return -1;
+      if(copy_to_user(colors,kcolors, sizeof(int)*nr_pids))
+            return -EFAULT;
+
       return 0;
 }
