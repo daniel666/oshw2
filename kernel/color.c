@@ -10,8 +10,8 @@
 void print_task(struct task_struct* tsk)
 {
       printk("-------Task------\n");
-      printk("pid: %d\n", tsk->pid);
-      printk("tgid: %d\n",tsk->tgid);
+      printk("pid: %hu\n", tsk->pid);
+      printk("tgid: %hu\n",tsk->tgid);
       printk("name: %s\n",tsk->comm);
       printk("-------End------\n");
 }
@@ -74,7 +74,8 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             return -EFAULT;
 
       if(debug){
-            print_pids(kpids, nr_pids, "Output kpids:");
+            //print_pids(kpids, nr_pids, "Output kpids:");
+            print_int(kpids, nr_pids, "Output kpids:"); //nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnote
             print_u_int16(kcolors, nr_pids, "Output kcolor:");
       }
       for(i=0;i<nr_pids;i++){
@@ -86,18 +87,18 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
             //need to lock pid???
             //tmp_task = find_task_by_vpid(kpids[i]);
             //tmp_task = pid_task(find_vpid(kpids[i]), PIDTYPE_PID);
-            tmp_task = pid_task(find_get_pid(kpids[i]), PIDTYPE_PID);
-            if(!tmp_task){
+            //task = pid_task(find_get_pid(kpids[i]), PIDTYPE_PID);
+            task = find_task_by_vpid(kpids[i]);
+            if(!task){
                    kretval[i]=-EINVAL;
                    printk("Found no task by %d\n", kpids[i]);
                    fail_flag=true;
                    continue;
             }
-            tgid =tmp_task->tgid;
+            tgid =task->tgid;
             if(debug)
-                  print_task(tmp_task);
+                  print_task(task);
 
-            write_lock_irq(&tasklist_lock);
 //            do_each_thread(task, thread_task){
 //                  if(thread_task->tgid == tgid){
 //                        thread_task->color = kcolors[i];
@@ -106,12 +107,15 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
 //            }while_each_thread(task, thread_task);
            thread_task = task;
            do{
+                  write_lock_irq(&tasklist_lock);
+                  if(debug)
+                        printk("Assigning color to pid %d with color %hu\n",thread_task->pid, kcolors[i]);
                   thread_task->color = kcolors[i];
                   kretval[i] = 0;
+                  write_unlock_irq(&tasklist_lock);
            }while_each_thread(task, thread_task); //note this macro iterates all threads in the thread_group cos it.\
                                                    we don't need to test if tgid are equal, it's semantically in the macro
 
-            write_unlock_irq(&tasklist_lock);
       }
       if(copy_to_user(retval,kretval, sizeof(int)*nr_pids))
             return -EFAULT;

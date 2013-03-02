@@ -125,8 +125,8 @@ extern struct cred init_cred;
  * your own risk!. Base=0, limit=0x1fffff (=2MB)
  */
 #define INIT_TASK(tsk)	\
-{									\
-	.color          = 0.                                            \
+{                                                                       \
+	.color          = 0,                                            \
         .state		= 0,						\
 	.stack		= &init_thread_info,				\
 	.usage		= ATOMIC_INIT(2),				\

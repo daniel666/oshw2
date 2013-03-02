@@ -39,11 +39,11 @@ int main(int argc, char* argv[])
 
    for(i=0;i<size;i++){
          cmd[i] = argv[2*i+1];
-         colors[i] = *argv[2*i+2];
+         sscanf(argv[2*i+2], "%hu", &colors[i]);
    }
 
    get_pids_cmd(cmd, pids, size);
-   syscall(SET_COLORS, size, cmd, colors, retval);
+   syscall(SET_COLORS, size, pids, colors, retval);
    for(i = 0; i<size; i++)
    printf("%d ",retval[i]);
 
@@ -55,76 +55,47 @@ void get_pids_cmd(char* cmd[], pid_t pids[], int size)
 {
       HASHTBL *hashtbl;
       hash_size hashsize = 1000;
-      DIR *dir;
-      char* proc = "/proc";
-      struct dirent* dent;
 
       if(!(hashtbl = hashtbl_create(hashsize,NULL))){
             fprintf(stderr, "ERROR: hashtbl_create() failed\n");
             exit(EXIT_FAILURE);
       }
 
-      dir = opendir(proc);
-      if(!dir){
-         printf("%s doesn't exist\n", proc);
-         exit(-1);
-      }
-
-      while(dent=readdir(dir)){
-            if(isDir(dent)){
-                  //char status_file[100];
-                  char cmdline_file[100];
-                  FILE* fh;
-                  bool cflag=0;
-                  bool pflag=0;
-                  if(!strcmp(dent->d_name,".") || !strcmp(dent->d_name, "..")||!strcmp(dent->d_name,"self")) continue;
- //                 sprintf(status_file,"/proc/%s/status",dent->d_name);
-
-                  pid_t pid;
-                  char cmd_name[100];
-                  sprintf(cmdline_file,"/proc/%s/cmdline",dent->d_name);
-                  if(fh = fopen(cmdline_file,"r")){
-                        sscanf(dent->d_name, "%hu", &pid);
-                        if(fgets(cmd_name, 100, fh)){
-                              if(DEBUG)
-                                    printf("Found pair (%s %hu)\n", cmd_name, pid);
-                              hashtbl_insert(hashtbl, cmd_name, pid);
-                        }else
-                              printf("Cannot get cmd_name from %s\n", cmdline_file);
-                  }
-//                  if(fh = fopen(status_file,"r")){
-//                        char *line;
-//                        line = malloc(1000*sizeof(char));
-//                        char *pos;
-//                        size_t len=0;
+//      DIR *dir;
+//      char* proc = "/proc";
+//      struct dirent* dent;
 //
-//                          if(DEBUG)
-//                                 printf("------In File <%s>-------\n", status_file);
-//                         while(fgets(line, 1000, fh)){
-//                           char cmd_name[50];
-//                           pid_t pid;
-//                           if(DEBUG)
-//                                 printf("Reading line: %s\n", line);
-//                           if(pos=contain_name(line)){
-//                                 strcpy(cmd_name, pos);
-//                                 cflag = true;
-//                           }
-//                           if(pos=contain_pid(line)){
-//                                 sscanf(pos, "%hu", &pid);
-//                                 pflag = true;
-//                           }
-//                           if(cflag&&pflag){
-//                                 if(DEBUG)
-//                                       printf("Found pair (%s %hu)", cmd_name, pid);
-//                                 hashtbl_insert(hashtbl, cmd_name, pid);
-//                                 break;
-//                           }
-//                        }
-//                        fclose(fh);
+//      dir = opendir(proc);
+//      if(!dir){
+//         printf("%s doesn't exist\n", proc);
+//         exit(-1);
+//      }
+//
+//      while(dent=readdir(dir)){
+//            if(isDir(dent)){
+//                  char cmdline_file[100];
+//                  FILE* fh;
+//                  bool cflag=0;
+//                  bool pflag=0;
+//                  if(!strcmp(dent->d_name,".") || !strcmp(dent->d_name, "..")||!strcmp(dent->d_name,"self")) continue;
+//
+//                  pid_t pid;
+//                  char cmd_name[100];
+//                  sprintf(cmdline_file,"/proc/%s/cmdline",dent->d_name);
+//                  if(fh = fopen(cmdline_file,"r")){
+//                        sscanf(dent->d_name, "%d", &pid); //nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnote
+//                        if(fgets(cmd_name, 100, fh)){
+//                              if(DEBUG)
+//                                    //printf("Found pair (%s %hu)\n", cmd_name, pid);
+//                                    printf("Found pair (%s %d)\n", cmd_name, pid);//nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnote
+//                              hashtbl_insert(hashtbl, cmd_name, pid);
+//                        }else
+//                              printf("Cannot get cmd_name from %s\n", cmdline_file);
+//                        fclose(cmdline_file);
 //                  }
-            }
-      }
-
+//            }
+//      }
+//
       if(DEBUG){
             printf("------TRAVERSING THE HASH\n");
             hashtbl_traverse(hashtbl, hashsize);

@@ -18,6 +18,7 @@ struct hashnode_s {
 };
 
 HASHTBL *hashtbl_create(hash_size size, hash_size (*hashfunc)(const char *));
+void hashtbl_fill(HASHTBL *hashtbl);
 void hashtbl_destroy(HASHTBL *hashtbl);
 int hashtbl_insert(HASHTBL *hashtbl, const char *key, pid_t data);
 int hashtbl_remove(HASHTBL *hashtbl, const char *key);

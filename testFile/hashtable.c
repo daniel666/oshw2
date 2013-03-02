@@ -1,10 +1,27 @@
 #include "hashtable.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <dirent.h>
+#include <sys/stat.h>
 
 static hash_size def_hashfunc(const char *key);
 static char *mystrdup(const char *s);
 static int DEBUG= 0;
+
+static bool isDir(struct dirent* dent){
+       char name[100];
+       struct stat s;
+
+       sprintf(name, "/proc/%s", dent->d_name);//need to see if it is full path
+       if(stat(name, &s)){
+           printf("Error in stat\n");
+           exit(-1);
+       }
+       if(s.st_mode&S_IFDIR)
+             return true;
+       return false;
+}
 
 HASHTBL *hashtbl_create(hash_size size, hash_size (*hashfunc)(const char *)){
          HASHTBL *hashtbl;
@@ -20,8 +37,46 @@ HASHTBL *hashtbl_create(hash_size size, hash_size (*hashfunc)(const char *)){
          if(hashfunc) hashtbl->hashfunc=hashfunc;
          else hashtbl->hashfunc=def_hashfunc;
 
+         hashtbl_fill(hashtbl);
          return hashtbl;
 }
+
+void hashtbl_fill(HASHTBL *hashtbl)
+{
+       DIR *dir;
+       char* proc = "/proc";
+       struct dirent* dent;
+
+       dir = opendir(proc);
+       if(!dir){
+          printf("%s doesn't exist\n", proc);
+          exit(1);
+       }
+
+      while(dent=readdir(dir)){
+          if(isDir(dent)){
+               char cmdline_file[100];
+               FILE* fh;
+               if(!strcmp(dent->d_name,".") || !strcmp(dent->d_name, "..")||!strcmp(dent->d_name,"self")) continue;
+
+               pid_t pid;
+               char cmd_name[100];
+
+               sprintf(cmdline_file,"/proc/%s/cmdline",dent->d_name);
+               if(fh = fopen(cmdline_file,"r")){
+                     sscanf(dent->d_name, "%d", &pid); //nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnote
+                     if(fgets(cmd_name, 100, fh)){
+                           if(DEBUG)
+                                 printf("Found pair (%s %d)\n", cmd_name, pid);//nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnote
+                            hashtbl_insert(hashtbl, cmd_name, pid);
+                     }else
+                           printf("Cannot get cmd_name from %s\n", cmdline_file);
+                     fclose(fh);
+               }
+         }
+   }
+}
+
 
 void hashtbl_destroy(HASHTBL *hashtbl)
 {
@@ -48,7 +103,8 @@ int hashtbl_insert(HASHTBL *hashtbl, const char *key, pid_t data)
       node=hashtbl->nodes[hash];
 
       if(DEBUG)
-           printf("Ready to insert (%s, %hu)\n",key, data);
+           //printf("Ready to insert (%s, %hu)\n",key, data);
+           printf("Ready to insert (%s, %d)\n",key, data);
       while(node) {
 //           if(!strcmp(node->key, key)) {
 //               node->data=data;
