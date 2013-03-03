@@ -56,11 +56,12 @@ r: $(APP)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(APP) $(INSTALL_DIR)/$(APP)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb shell chmod 777 $(INSTALL_DIR)/$(APP)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb shell $(INSTALL_DIR)/$(APP)
+
 p: $(SETCOLORS)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(SETCOLORS) $(INSTALL_DIR)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb shell chmod 777 $(INSTALL_DIR)/$(SETCOLORS)
 
-q: $(SETCOLORS)
+q: $(GETCOLORS)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(GETCOLORS) $(INSTALL_DIR)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb shell chmod 777 $(INSTALL_DIR)/$(GETCOLORS)
 

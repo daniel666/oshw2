@@ -1393,7 +1393,7 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 
 	/* TODO: reuse incoming transaction for reply */
 
-	//RETURN FAILED REPLY	
+	//RETURN FAILED REPLY
 	int DEBUG=0;
 	int retval[nr_pids];
 	u_int16_t ret_colors[nr_pids];
@@ -1428,17 +1428,17 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 	if(retval[0] != 0) {
 		return_error = BR_FAILED_REPLY;
 		printk("[binder.c] Error: RETVAL[0] = %d\n",retval[0]);
-		goto err_compare_color; 
+		goto err_compare_color;
 	} else if (retval[1] != 0) {
 		return_error = BR_FAILED_REPLY;
 		printk("[binder.c] Error: RETVAL[1] = %d\n",retval[1]);
-		goto err_compare_color; 
+		goto err_compare_color;
 	} else if ((ret_colors[0] != ret_colors[1]) && (ret_colors[0] != 0) && (ret_colors[1] != 0)) {
 		return_error = BR_FAILED_REPLY;
 		printk("[binder.c] DifferentColor: proc=%d, target_proc=%d\n",ret_colors[0],ret_colors[1]);
-		goto err_compare_color; 
+		goto err_compare_color;
 	} else {
-		printk("[binder.c] Transaction from %d(color: %d) to %d(color: %d)\n",pids[0],ret_colors[0],pids[1],ret_colors[1]);
+	//---------------------------------	printk("[binder.c] Transaction from %d(color: %d) to %d(color: %d)\n",pids[0],ret_colors[0],pids[1],ret_colors[1]);
 	}
 
 
@@ -2929,7 +2929,7 @@ static int binder_release(struct inode *nodp, struct file *filp)
 	}
 
 	binder_defer_work(proc, BINDER_DEFERRED_RELEASE);
-	
+
 	return 0;
 }
 
@@ -3072,7 +3072,7 @@ static void binder_deferred_func(struct work_struct *work)
 
 		if (defer & BINDER_DEFERRED_RELEASE)
 			binder_deferred_release(proc); /* frees proc */
-	
+
 		mutex_unlock(&binder_lock);
 		if (files)
 			put_files_struct(files);
