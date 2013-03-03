@@ -1,4 +1,3 @@
-APP := test
 SETCOLORS := setcolors
 GETCOLORS := getcolors
 FORKTEST := forktest
@@ -25,16 +24,12 @@ LDFLAGS := -Wl,-rpath-link=$(LIBDIR),-dynamic-linker=/system/bin/linker -L$(LIBD
 LDFLAGS += $(LIBDIR)/crtbegin_dynamic.o $(LIBDIR)/crtend_android.o -nostdlib -lc -disable-multilib -lm
 
 
-all: $(APP) $(SETCOLORS) $(GETCOLORS)
-
-OBJS += $(APP).o
+all: $(SETCOLORS) $(GETCOLORS)
 
 OBJS2 += $(SETCOLORS).o hashtable.o
 
 OBJS3 += $(GETCOLORS).o hashtable.o
 
-$(APP): $(OBJS)
-	$(CC) $(LDFLAGS) -o $@ $^
 $(SETCOLORS): $(OBJS2)
 	$(CC) $(LDFLAGS) -o $@ $^
 $(GETCOLORS): $(OBJS3)
@@ -43,15 +38,12 @@ $(GETCOLORS): $(OBJS3)
 %.o: %.c
 	$(CC) -c $(INCLUDE) $(CFLAGS) $< -o $@
 
-install: $(APP)
-	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(APP) $(INSTALL_DIR)/$(APP)
-	$(ANDROID_SDK_ROOT)/platform-tools/adb shell chmod 777 $(INSTALL_DIR)/$(APP)
 
 shell:
 	$(ANDROID_SDK_ROOT)/platform-tools/adb shell
 
 run:
-	$(ANDROID_SDK_ROOT)/platform-tools/adb shell $(INSTALL_DIR)/$(APP)
+	$(ANDROID_SDK_ROOT)/platform-tools/adb shell $(INSTALL_DIR)/
 
 r: $(APP)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(APP) $(INSTALL_DIR)/$(APP)
@@ -70,5 +62,5 @@ w: $(FORKTEST)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(FORKTEST) $(INSTALL_DIR)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb shell chmod 777 $(INSTALL_DIR)/$(FORKTEST)
 clean:
-	@rm -f $(APP).o $(APP)
+	@rm -f $(SETCOLORS) $(GETCOLORS) $(FORKTEST).o $(SETCOLORS) $(GETCOLORS) $(FORKTEST)
 

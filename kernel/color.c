@@ -117,8 +117,7 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
                   thread_task->color = kcolors[i];
                   kretval[i] = 0;
                   write_unlock_irq(&tasklist_lock);
-           }while_each_thread(task, thread_task); //this macro iterates all threads in the thread_group cos it.\
-                                                  great now we don't need to test if tgid are equal, it's semantically in the macro
+           }while_each_thread(task, thread_task); //this macro iterates all threads in the thread_group cos it. now we don't need to test if tgid are equal, it's semantically in the macro
           rcu_read_unlock();
       }
       if(copy_to_user(retval,kretval, sizeof(int)*nr_pids)){
