@@ -55,6 +55,8 @@ static DEFINE_MUTEX(binder_deferred_lock);
 static int binder_read_proc_proc(
 	char *page, char **start, off_t off, int count, int *eof, void *data);
 
+static int trace0,trace1;
+
 /* This is only defined in include/asm-arm/sizes.h */
 #ifndef SZ_1K
 #define SZ_1K                               0x400
@@ -1393,8 +1395,12 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 
 	/* TODO: reuse incoming transaction for reply */
 
+<<<<<<< HEAD
 	//RETURN FAILED REPLY
 	int DEBUG=0;
+=======
+	//RETURN FAILED REPLY	
+>>>>>>> 55f0df8b829e7400d38f2a9a770f8ea785428f83
 	int retval[nr_pids];
 	u_int16_t ret_colors[nr_pids];
 	pid_t pids[nr_pids] = {proc->pid,target_proc->pid};
@@ -1405,7 +1411,7 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 	int i;
       	for(i=0; i<nr_pids; i++){
             struct task_struct *task;
-
+	    rcu_read_lock();
             task = find_task_by_vpid(pids[i]);
             if(!task){
                    retval[i]=-EINVAL;
@@ -1416,17 +1422,13 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
             ret_colors[i] = task->color;
             retval[i] = 0;
             read_unlock_irq(&tasklist_lock);
+	    rcu_read_unlock();
       }
 
-	if(DEBUG==1){
-		printk("[binder.c] Transaction from %d(color: %d) to %d(color: %d)\n",pids[0],ret_colors[0],pids[1],ret_colors[1]);
-		printk("[binder.c] RETVAL[0] = %d, RETVAL[1] = %d\n",retval[0],retval[1]);
-
-	}
-
-	//Decide
+	//Reply Error
 	if(retval[0] != 0) {
 		return_error = BR_FAILED_REPLY;
+<<<<<<< HEAD
 		printk("[binder.c] Error: RETVAL[0] = %d\n",retval[0]);
 		goto err_compare_color;
 	} else if (retval[1] != 0) {
@@ -1439,6 +1441,25 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 		goto err_compare_color;
 	} else {
 	//---------------------------------	printk("[binder.c] Transaction from %d(color: %d) to %d(color: %d)\n",pids[0],ret_colors[0],pids[1],ret_colors[1]);
+=======
+		printk("[binder.c] Get Color Error[0]: pid:%d return %d\n",pids[0],retval[0]);
+		goto err_compare_color; 
+	} else if (retval[1] != 0) {
+		return_error = BR_FAILED_REPLY;
+		printk("[binder.c] Get Color Error[1]: pid:%d return %d\n",pids[1],retval[1]);
+		goto err_compare_color; 
+	} else if ((ret_colors[0] != ret_colors[1]) && (ret_colors[0] != 0) && (ret_colors[1] != 0)) {
+		return_error = BR_FAILED_REPLY;
+		printk("[binder.c] DifferentColor: Transaction from %d(color: %d) to %d(color: %d)\n",pids[0],ret_colors[0],pids[1],ret_colors[1]);
+		trace0 = ret_colors[0];
+		trace1 = ret_colors[1];
+		goto err_compare_color; 
+	} else {
+		if((trace0!=NULL && trace1 != NULL) && (trace0 == ret_colors[0] && trace1 == ret_colors[1]))
+		{
+			printk("[binder.c] Transaction? from %d(color: %d) to %d(color: %d)\n",pids[0],ret_colors[0],pids[1],ret_colors[1]);
+		}
+>>>>>>> 55f0df8b829e7400d38f2a9a770f8ea785428f83
 	}
 
 
