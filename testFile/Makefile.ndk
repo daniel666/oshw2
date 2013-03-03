@@ -1,6 +1,7 @@
 APP := test
 SETCOLORS := setcolors
 GETCOLORS := getcolors
+FORKTEST := forktest
 ROOT:=$(HOME)
 NDK_PLATFORM_VER := 14
 INSTALL_DIR := /data/tmp
@@ -64,6 +65,9 @@ q: $(SETCOLORS)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(GETCOLORS) $(INSTALL_DIR)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb shell chmod 777 $(INSTALL_DIR)/$(GETCOLORS)
 
+w: $(FORKTEST)
+	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(FORKTEST) $(INSTALL_DIR)
+	$(ANDROID_SDK_ROOT)/platform-tools/adb shell chmod 777 $(INSTALL_DIR)/$(FORKTEST)
 clean:
 	@rm -f $(APP).o $(APP)
 

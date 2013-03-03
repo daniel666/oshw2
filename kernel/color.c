@@ -173,7 +173,6 @@ SYSCALL_DEFINE4(get_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       }
       if(copy_to_user(retval,kretval, sizeof(int)*nr_pids))
             return -EFAULT;
-	}
 
       if(fail_flag) return -1;
       return 0;
