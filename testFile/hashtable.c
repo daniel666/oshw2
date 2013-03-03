@@ -57,7 +57,7 @@ void hashtbl_fill(HASHTBL *hashtbl)
           if(isDir(dent)){
                char cmdline_file[100];
                FILE* fh;
-               if(!strcmp(dent->d_name,".") || !strcmp(dent->d_name, "..")||!strcmp(dent->d_name,"self")) continue;
+               if(!strcmp(dent->d_name,".") || !strcmp(dent->d_name, "..")) continue;
 
                pid_t pid;
                char cmd_name[100];
@@ -70,7 +70,8 @@ void hashtbl_fill(HASHTBL *hashtbl)
                                  printf("Found pair (%s %d)\n", cmd_name, pid);//nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnote
                             hashtbl_insert(hashtbl, cmd_name, pid);
                      }else
-                           printf("Cannot get cmd_name from %s\n", cmdline_file);
+                          if(DEBUG)
+                                 printf("Cannot get cmd_name from %s\n", cmdline_file);
                      fclose(fh);
                }
          }
