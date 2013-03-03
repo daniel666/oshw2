@@ -4,19 +4,20 @@
 #include <linux/cred.h>
 #include <linux/types.h>
 #include <linux/sched.h>
-#include <asm/uaccess.h>
+#include <linux/uaccess.h>
+//#include <asm/uaccess.h>
 #include <linux/pid.h>
 #include <linux/slab.h>
-#define debug 1
+#define debug 0
 /*
  *These are utitlity  functions
  */
-void print_task(struct task_struct* tsk)
+void print_task(struct task_struct *tsk)
 {
       printk("-------Task------\n");
       printk("pid: %hu\n", tsk->pid);
-      printk("tgid: %hu\n",tsk->tgid);
-      printk("name: %s\n",tsk->comm);
+      printk("tgid: %hu\n", tsk->tgid);
+      printk("name: %s\n", tsk->comm);
       printk("-------End------\n");
 }
 
@@ -87,7 +88,7 @@ SYSCALL_DEFINE4(set_colors, int, nr_pids, pid_t *, pids, u_int16_t *, colors, in
       }
 
       if(debug){
-            print_int(kpids, nr_pids, "Output kpids:"); //nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnote
+            print_int(kpids, nr_pids, "Output kpids:");
             print_u_int16(kcolors, nr_pids, "Output kcolor:");
       }
 
