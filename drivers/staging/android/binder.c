@@ -1395,12 +1395,6 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 
 	/* TODO: reuse incoming transaction for reply */
 
-<<<<<<< HEAD
-	//RETURN FAILED REPLY
-	int DEBUG=0;
-=======
-	//RETURN FAILED REPLY	
->>>>>>> 55f0df8b829e7400d38f2a9a770f8ea785428f83
 	int retval[nr_pids];
 	u_int16_t ret_colors[nr_pids];
 	pid_t pids[nr_pids] = {proc->pid,target_proc->pid};
@@ -1428,20 +1422,8 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 	//Reply Error
 	if(retval[0] != 0) {
 		return_error = BR_FAILED_REPLY;
-<<<<<<< HEAD
-		printk("[binder.c] Error: RETVAL[0] = %d\n",retval[0]);
-		goto err_compare_color;
-	} else if (retval[1] != 0) {
-		return_error = BR_FAILED_REPLY;
-		printk("[binder.c] Error: RETVAL[1] = %d\n",retval[1]);
-		goto err_compare_color;
-	} else if ((ret_colors[0] != ret_colors[1]) && (ret_colors[0] != 0) && (ret_colors[1] != 0)) {
-		return_error = BR_FAILED_REPLY;
-		printk("[binder.c] DifferentColor: proc=%d, target_proc=%d\n",ret_colors[0],ret_colors[1]);
-		goto err_compare_color;
-	} else {
-	//---------------------------------	printk("[binder.c] Transaction from %d(color: %d) to %d(color: %d)\n",pids[0],ret_colors[0],pids[1],ret_colors[1]);
-=======
+
+
 		printk("[binder.c] Get Color Error[0]: pid:%d return %d\n",pids[0],retval[0]);
 		goto err_compare_color; 
 	} else if (retval[1] != 0) {
@@ -1459,7 +1441,6 @@ binder_transaction(struct binder_proc *proc, struct binder_thread *thread,
 		{
 			printk("[binder.c] Transaction? from %d(color: %d) to %d(color: %d)\n",pids[0],ret_colors[0],pids[1],ret_colors[1]);
 		}
->>>>>>> 55f0df8b829e7400d38f2a9a770f8ea785428f83
 	}
 
 
