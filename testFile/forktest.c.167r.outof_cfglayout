@@ -1,0 +1,1240 @@
+
+;; Function testfork (testfork)[0:13]
+
+Reordered sequence:
+ 2 bb 2  [0]
+ 3 bb 3  [0]
+ 4 bb 4  [0]
+ 5 bb 5  [0]
+ 6 bb 6  [0]
+ 7 bb 7  [0]
+ 8 bb 8  [0]
+ 9 bb 9  [0]
+ 10 bb 10  [0]
+ 11 bb 11  [0]
+ 12 bb 12  [0]
+ 13 bb 13  [0]
+ 14 bb 14  [0]
+ 15 bb 15  [0]
+ 16 bb 16  [0]
+ 17 bb 17  [0]
+Edge 12->17 redirected to 18
+(note 1 0 3 NOTE_INSN_DELETED)
+
+;; Start of basic block ( 0) -> 2
+;; Pred edge  ENTRY (fallthru)
+(note 3 1 2 2 [bb 2] NOTE_INSN_BASIC_BLOCK)
+
+(note 2 3 5 2 NOTE_INSN_FUNCTION_BEG)
+
+(insn 5 2 6 2 forktest.c:9 (set (reg:SI 68 [ delay.2 ])
+        (mem/c/i:SI (reg/f:SI 16 argp) [0 delay+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 6 5 7 2 forktest.c:9 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg:SI 68 [ delay.2 ])) 41 {*movsi_1} (nil))
+
+(call_insn 7 6 8 2 forktest.c:9 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("sleep") [flags 0x41] <function_decl 0x4031a800 sleep>) [0 S1 A8])
+            (const_int 4 [0x4]))) 683 {*call_value_0} (nil)
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(insn 8 7 9 2 forktest.c:11 (set (reg:SI 70)
+        (mem/u/c:SI (plus:SI (reg:SI 3 bx)
+                (const:SI (unspec:SI [
+                            (symbol_ref:SI ("__sF") [flags 0x40] <var_decl 0x40303898 __sF>)
+                        ] 0))) [0 S4 A8])) 41 {*movsi_1} (nil))
+
+(insn 9 8 10 2 forktest.c:11 (set (reg/f:SI 69)
+        (plus:SI (reg:SI 70)
+            (const_int 84 [0x54]))) 209 {*lea_1} (expr_list:REG_EQUAL (const:SI (plus:SI (symbol_ref:SI ("__sF") [flags 0x40] <var_decl 0x40303898 __sF>)
+                (const_int 84 [0x54])))
+        (nil)))
+
+(insn 10 9 11 2 forktest.c:11 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 69)) 41 {*movsi_1} (nil))
+
+(call_insn 11 10 12 2 forktest.c:11 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("fflush") [flags 0x41] <function_decl 0x40320600 fflush>) [0 S1 A8])
+            (const_int 4 [0x4]))) 683 {*call_value_0} (nil)
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(insn 12 11 13 2 forktest.c:12 (set (reg/f:SI 71)
+        (plus:SI (reg:SI 3 bx)
+            (const:SI (unspec:SI [
+                        (symbol_ref/f:SI ("*.LC0") [flags 0x2] <string_cst 0x4034ae40>)
+                    ] 1)))) 209 {*lea_1} (expr_list:REG_EQUAL (symbol_ref/f:SI ("*.LC0") [flags 0x2] <string_cst 0x4034ae40>)
+        (nil)))
+
+(insn 13 12 14 2 forktest.c:12 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 4 [0x4])) [0 S4 A32])
+        (reg/f:SI 71)) 41 {*movsi_1} (nil))
+
+(insn 14 13 15 2 forktest.c:12 (set (reg/f:SI 72)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 16 argp)
+                (const_int 4 [0x4])) [0 f+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 15 14 16 2 forktest.c:12 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 72)) 41 {*movsi_1} (nil))
+
+(call_insn/i 16 15 17 2 forktest.c:12 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("strcmp") [flags 0x41] <function_decl 0x4025f600 strcmp>) [0 S1 A8])
+            (const_int 8 [0x8]))) 683 {*call_value_0} (expr_list:REG_EH_REGION (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (expr_list:REG_DEP_TRUE (use (mem/f/i:SI (reg/f:SI 7 sp) [0 S4 A32]))
+            (expr_list:REG_DEP_TRUE (use (mem/f/i:SI (plus:SI (reg/f:SI 7 sp)
+                            (const_int 4 [0x4])) [0 S4 A32]))
+                (nil)))))
+
+(insn 17 16 18 2 forktest.c:12 (set (reg:SI 73)
+        (reg:SI 0 ax)) 41 {*movsi_1} (nil))
+
+(insn 18 17 19 2 forktest.c:12 (set (reg:SI 74)
+        (reg:SI 73)) 41 {*movsi_1} (nil))
+
+(insn 19 18 20 2 forktest.c:12 (set (reg:SI 67 [ D.2815 ])
+        (reg:SI 74)) 41 {*movsi_1} (nil))
+
+(insn 20 19 21 2 forktest.c:12 (set (reg:CCZ 17 flags)
+        (compare:CCZ (reg:SI 67 [ D.2815 ])
+            (const_int 0 [0x0]))) 0 {*cmpsi_ccno_1} (nil))
+
+(jump_insn 21 20 22 2 forktest.c:12 (set (pc)
+        (if_then_else (ne (reg:CCZ 17 flags)
+                (const_int 0 [0x0]))
+            (label_ref 30)
+            (pc))) 442 {*jcc_1} (nil))
+;; End of basic block 2 -> ( 3 4)
+
+;; Succ edge  3 (fallthru)
+;; Succ edge  4
+
+;; Start of basic block ( 2) -> 3
+;; Pred edge  2 (fallthru)
+(note 22 21 23 3 [bb 3] NOTE_INSN_BASIC_BLOCK)
+
+(call_insn 23 22 24 3 forktest.c:13 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("fork") [flags 0x41] <function_decl 0x40272b80 fork>) [0 S1 A8])
+            (const_int 0 [0x0]))) 683 {*call_value_0} (expr_list:REG_EH_REGION (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(insn 24 23 25 3 forktest.c:13 (set (reg:SI 75)
+        (reg:SI 0 ax)) 41 {*movsi_1} (nil))
+
+(insn 25 24 26 3 forktest.c:13 (set (reg:SI 76)
+        (reg:SI 75)) 41 {*movsi_1} (nil))
+
+(insn 26 25 27 3 forktest.c:13 (set (reg:SI 66 [ pid.3 ])
+        (reg:SI 76)) 41 {*movsi_1} (nil))
+
+(insn 27 26 139 3 forktest.c:13 (set (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -8 [0xfffffff8])) [0 pid+0 S4 A32])
+        (reg:SI 66 [ pid.3 ])) 41 {*movsi_1} (nil))
+
+(jump_insn 139 27 140 3 (set (pc)
+        (label_ref 66)) -1 (nil))
+;; End of basic block 3 -> ( 8)
+
+;; Succ edge  8 [100.0%] 
+
+(barrier 140 139 30)
+
+;; Start of basic block ( 2) -> 4
+;; Pred edge  2
+(code_label 30 140 31 4 2 "" [1 uses])
+
+(note 31 30 32 4 [bb 4] NOTE_INSN_BASIC_BLOCK)
+
+(insn 32 31 33 4 forktest.c:15 (set (reg/f:SI 77)
+        (plus:SI (reg:SI 3 bx)
+            (const:SI (unspec:SI [
+                        (symbol_ref/f:SI ("*.LC1") [flags 0x2] <string_cst 0x4034aea0>)
+                    ] 1)))) 209 {*lea_1} (expr_list:REG_EQUAL (symbol_ref/f:SI ("*.LC1") [flags 0x2] <string_cst 0x4034aea0>)
+        (nil)))
+
+(insn 33 32 34 4 forktest.c:15 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 4 [0x4])) [0 S4 A32])
+        (reg/f:SI 77)) 41 {*movsi_1} (nil))
+
+(insn 34 33 35 4 forktest.c:15 (set (reg/f:SI 78)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 16 argp)
+                (const_int 4 [0x4])) [0 f+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 35 34 36 4 forktest.c:15 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 78)) 41 {*movsi_1} (nil))
+
+(call_insn/i 36 35 37 4 forktest.c:15 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("strcmp") [flags 0x41] <function_decl 0x4025f600 strcmp>) [0 S1 A8])
+            (const_int 8 [0x8]))) 683 {*call_value_0} (expr_list:REG_EH_REGION (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (expr_list:REG_DEP_TRUE (use (mem/f/i:SI (reg/f:SI 7 sp) [0 S4 A32]))
+            (expr_list:REG_DEP_TRUE (use (mem/f/i:SI (plus:SI (reg/f:SI 7 sp)
+                            (const_int 4 [0x4])) [0 S4 A32]))
+                (nil)))))
+
+(insn 37 36 38 4 forktest.c:15 (set (reg:SI 65 [ D.2820 ])
+        (reg:SI 0 ax)) 41 {*movsi_1} (nil))
+
+(insn 38 37 39 4 forktest.c:15 (set (reg:CCZ 17 flags)
+        (compare:CCZ (reg:SI 65 [ D.2820 ])
+            (const_int 0 [0x0]))) 0 {*cmpsi_ccno_1} (nil))
+
+(jump_insn 39 38 40 4 forktest.c:15 (set (pc)
+        (if_then_else (ne (reg:CCZ 17 flags)
+                (const_int 0 [0x0]))
+            (label_ref 46)
+            (pc))) 442 {*jcc_1} (nil))
+;; End of basic block 4 -> ( 5 6)
+
+;; Succ edge  5 (fallthru)
+;; Succ edge  6
+
+;; Start of basic block ( 4) -> 5
+;; Pred edge  4 (fallthru)
+(note 40 39 41 5 [bb 5] NOTE_INSN_BASIC_BLOCK)
+
+(call_insn 41 40 42 5 forktest.c:16 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("vfork") [flags 0x41] <function_decl 0x40309380 vfork>) [0 S1 A8])
+            (const_int 0 [0x0]))) 683 {*call_value_0} (expr_list:REG_SETJMP (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(insn 42 41 43 5 forktest.c:16 (set (reg:SI 64 [ pid.4 ])
+        (reg:SI 0 ax)) 41 {*movsi_1} (nil))
+
+(insn 43 42 141 5 forktest.c:16 (set (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -8 [0xfffffff8])) [0 pid+0 S4 A32])
+        (reg:SI 64 [ pid.4 ])) 41 {*movsi_1} (nil))
+
+(jump_insn 141 43 142 5 (set (pc)
+        (label_ref 66)) -1 (nil))
+;; End of basic block 5 -> ( 8)
+
+;; Succ edge  8 [100.0%] 
+
+(barrier 142 141 46)
+
+;; Start of basic block ( 4) -> 6
+;; Pred edge  4
+(code_label 46 142 47 6 4 "" [1 uses])
+
+(note 47 46 48 6 [bb 6] NOTE_INSN_BASIC_BLOCK)
+
+(insn 48 47 49 6 forktest.c:18 (set (reg/f:SI 79)
+        (plus:SI (reg:SI 3 bx)
+            (const:SI (unspec:SI [
+                        (symbol_ref/f:SI ("*.LC2") [flags 0x2] <string_cst 0x4034af00>)
+                    ] 1)))) 209 {*lea_1} (expr_list:REG_EQUAL (symbol_ref/f:SI ("*.LC2") [flags 0x2] <string_cst 0x4034af00>)
+        (nil)))
+
+(insn 49 48 50 6 forktest.c:18 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 4 [0x4])) [0 S4 A32])
+        (reg/f:SI 79)) 41 {*movsi_1} (nil))
+
+(insn 50 49 51 6 forktest.c:18 (set (reg/f:SI 80)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 16 argp)
+                (const_int 4 [0x4])) [0 f+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 51 50 52 6 forktest.c:18 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 80)) 41 {*movsi_1} (nil))
+
+(call_insn/i 52 51 53 6 forktest.c:18 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("strcmp") [flags 0x41] <function_decl 0x4025f600 strcmp>) [0 S1 A8])
+            (const_int 8 [0x8]))) 683 {*call_value_0} (expr_list:REG_EH_REGION (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (expr_list:REG_DEP_TRUE (use (mem/f/i:SI (reg/f:SI 7 sp) [0 S4 A32]))
+            (expr_list:REG_DEP_TRUE (use (mem/f/i:SI (plus:SI (reg/f:SI 7 sp)
+                            (const_int 4 [0x4])) [0 S4 A32]))
+                (nil)))))
+
+(insn 53 52 54 6 forktest.c:18 (set (reg:SI 63 [ D.2825 ])
+        (reg:SI 0 ax)) 41 {*movsi_1} (nil))
+
+(insn 54 53 55 6 forktest.c:18 (set (reg:CCZ 17 flags)
+        (compare:CCZ (reg:SI 63 [ D.2825 ])
+            (const_int 0 [0x0]))) 0 {*cmpsi_ccno_1} (nil))
+
+(jump_insn 55 54 59 6 forktest.c:18 (set (pc)
+        (if_then_else (eq (reg:CCZ 17 flags)
+                (const_int 0 [0x0]))
+            (label_ref:SI 66)
+            (pc))) 442 {*jcc_1} (nil))
+;; End of basic block 6 -> ( 8 7)
+
+;; Succ edge  8
+;; Succ edge  7 (fallthru)
+
+;; Start of basic block ( 6) -> 7
+;; Pred edge  6 (fallthru)
+(code_label 59 55 60 7 5 "" [0 uses])
+
+(note 60 59 61 7 [bb 7] NOTE_INSN_BASIC_BLOCK)
+
+(insn 61 60 62 7 forktest.c:22 (set (reg/f:SI 81)
+        (plus:SI (reg:SI 3 bx)
+            (const:SI (unspec:SI [
+                        (symbol_ref/f:SI ("*.LC3") [flags 0x2] <string_cst 0x403585e8>)
+                    ] 1)))) 209 {*lea_1} (expr_list:REG_EQUAL (symbol_ref/f:SI ("*.LC3") [flags 0x2] <string_cst 0x403585e8>)
+        (nil)))
+
+(insn 62 61 63 7 forktest.c:22 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 81)) 41 {*movsi_1} (nil))
+
+(call_insn 63 62 143 7 forktest.c:22 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("printf") [flags 0x41] <function_decl 0x40263f00 printf>) [0 S1 A8])
+            (const_int 4 [0x4]))) 683 {*call_value_0} (nil)
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(jump_insn 143 63 144 7 forktest.c:23 (set (pc)
+        (label_ref 135)) -1 (nil))
+;; End of basic block 7 -> ( 17)
+
+;; Succ edge  17 [100.0%] 
+
+(barrier 144 143 66)
+
+;; Start of basic block ( 6 3 5) -> 8
+;; Pred edge  6
+;; Pred edge  3 [100.0%] 
+;; Pred edge  5 [100.0%] 
+(code_label 66 144 67 8 3 "" [3 uses])
+
+(note 67 66 68 8 [bb 8] NOTE_INSN_BASIC_BLOCK)
+
+(insn 68 67 69 8 forktest.c:25 (set (reg:CCZ 17 flags)
+        (compare:CCZ (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                    (const_int -8 [0xfffffff8])) [0 pid+0 S4 A32])
+            (const_int 0 [0x0]))) 0 {*cmpsi_ccno_1} (nil))
+
+(jump_insn 69 68 70 8 forktest.c:25 (set (pc)
+        (if_then_else (ne (reg:CCZ 17 flags)
+                (const_int 0 [0x0]))
+            (label_ref 116)
+            (pc))) 442 {*jcc_1} (nil))
+;; End of basic block 8 -> ( 9 14)
+
+;; Succ edge  9 (fallthru)
+;; Succ edge  14
+
+;; Start of basic block ( 8) -> 9
+;; Pred edge  8 (fallthru)
+(note 70 69 71 9 [bb 9] NOTE_INSN_BASIC_BLOCK)
+
+(insn 71 70 72 9 forktest.c:27 (set (reg/f:SI 82)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 16 argp)
+                (const_int 8 [0x8])) [0 cmdline+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 72 71 73 9 forktest.c:27 (set (reg/f:SI 62 [ D.2831 ])
+        (mem/f:SI (reg/f:SI 82) [0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 73 72 74 9 forktest.c:27 (set (reg/f:SI 83)
+        (plus:SI (reg:SI 3 bx)
+            (const:SI (unspec:SI [
+                        (symbol_ref/f:SI ("*.LC4") [flags 0x2] <string_cst 0x4034d45c>)
+                    ] 1)))) 209 {*lea_1} (expr_list:REG_EQUAL (symbol_ref/f:SI ("*.LC4") [flags 0x2] <string_cst 0x4034d45c>)
+        (nil)))
+
+(insn 74 73 75 9 forktest.c:27 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 4 [0x4])) [0 S4 A32])
+        (reg/f:SI 83)) 41 {*movsi_1} (nil))
+
+(insn 75 74 76 9 forktest.c:27 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 62 [ D.2831 ])) 41 {*movsi_1} (nil))
+
+(call_insn/i 76 75 77 9 forktest.c:27 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("strcmp") [flags 0x41] <function_decl 0x4025f600 strcmp>) [0 S1 A8])
+            (const_int 8 [0x8]))) 683 {*call_value_0} (expr_list:REG_EH_REGION (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (expr_list:REG_DEP_TRUE (use (mem/f/i:SI (reg/f:SI 7 sp) [0 S4 A32]))
+            (expr_list:REG_DEP_TRUE (use (mem/f/i:SI (plus:SI (reg/f:SI 7 sp)
+                            (const_int 4 [0x4])) [0 S4 A32]))
+                (nil)))))
+
+(insn 77 76 78 9 forktest.c:27 (set (reg:SI 61 [ D.2832 ])
+        (reg:SI 0 ax)) 41 {*movsi_1} (nil))
+
+(insn 78 77 79 9 forktest.c:27 (set (reg:CCZ 17 flags)
+        (compare:CCZ (reg:SI 61 [ D.2832 ])
+            (const_int 0 [0x0]))) 0 {*cmpsi_ccno_1} (nil))
+
+(jump_insn 79 78 80 9 forktest.c:27 (set (pc)
+        (if_then_else (ne (reg:CCZ 17 flags)
+                (const_int 0 [0x0]))
+            (label_ref 92)
+            (pc))) 442 {*jcc_1} (nil))
+;; End of basic block 9 -> ( 10 11)
+
+;; Succ edge  10 (fallthru)
+;; Succ edge  11
+
+;; Start of basic block ( 9) -> 10
+;; Pred edge  9 (fallthru)
+(note 80 79 81 10 [bb 10] NOTE_INSN_BASIC_BLOCK)
+
+(insn 81 80 82 10 forktest.c:28 (set (reg/f:SI 84)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 16 argp)
+                (const_int 8 [0x8])) [0 cmdline+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 82 81 83 10 forktest.c:28 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 4 [0x4])) [0 S4 A32])
+        (reg/f:SI 84)) 41 {*movsi_1} (nil))
+
+(insn 83 82 84 10 forktest.c:28 (set (reg/f:SI 85)
+        (plus:SI (reg:SI 3 bx)
+            (const:SI (unspec:SI [
+                        (symbol_ref/f:SI ("*.LC5") [flags 0x2] <string_cst 0x40356b2c>)
+                    ] 1)))) 209 {*lea_1} (expr_list:REG_EQUAL (symbol_ref/f:SI ("*.LC5") [flags 0x2] <string_cst 0x40356b2c>)
+        (nil)))
+
+(insn 84 83 85 10 forktest.c:28 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 85)) 41 {*movsi_1} (nil))
+
+(call_insn 85 84 86 10 forktest.c:28 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("execvp") [flags 0x41] <function_decl 0x40272300 execvp>) [0 S1 A8])
+            (const_int 8 [0x8]))) 683 {*call_value_0} (expr_list:REG_EH_REGION (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(insn 86 85 87 10 forktest.c:28 (set (reg:SI 86)
+        (reg:SI 0 ax)) 41 {*movsi_1} (nil))
+
+(insn 87 86 88 10 forktest.c:28 (set (reg:SI 87)
+        (reg:SI 86)) 41 {*movsi_1} (nil))
+
+(insn 88 87 89 10 forktest.c:28 (set (reg:SI 60 [ execcode.5 ])
+        (reg:SI 87)) 41 {*movsi_1} (nil))
+
+(insn 89 88 145 10 forktest.c:28 (set (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -4 [0xfffffffc])) [0 execcode+0 S4 A32])
+        (reg:SI 60 [ execcode.5 ])) 41 {*movsi_1} (nil))
+
+(jump_insn 145 89 146 10 (set (pc)
+        (label_ref 102)) -1 (nil))
+;; End of basic block 10 -> ( 12)
+
+;; Succ edge  12 [100.0%] 
+
+(barrier 146 145 92)
+
+;; Start of basic block ( 9) -> 11
+;; Pred edge  9
+(code_label 92 146 93 11 8 "" [1 uses])
+
+(note 93 92 94 11 [bb 11] NOTE_INSN_BASIC_BLOCK)
+
+(insn 94 93 95 11 forktest.c:32 (set (reg/f:SI 88)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 16 argp)
+                (const_int 8 [0x8])) [0 cmdline+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 95 94 96 11 forktest.c:32 (set (reg/f:SI 59 [ D.2837 ])
+        (mem/f:SI (reg/f:SI 88) [0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 96 95 97 11 forktest.c:32 (set (reg/f:SI 89)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 16 argp)
+                (const_int 8 [0x8])) [0 cmdline+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 97 96 98 11 forktest.c:32 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 4 [0x4])) [0 S4 A32])
+        (reg/f:SI 89)) 41 {*movsi_1} (nil))
+
+(insn 98 97 99 11 forktest.c:32 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 59 [ D.2837 ])) 41 {*movsi_1} (nil))
+
+(call_insn 99 98 100 11 forktest.c:32 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("execvp") [flags 0x41] <function_decl 0x40272300 execvp>) [0 S1 A8])
+            (const_int 8 [0x8]))) 683 {*call_value_0} (expr_list:REG_EH_REGION (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(insn 100 99 101 11 forktest.c:32 (set (reg:SI 58 [ execcode.6 ])
+        (reg:SI 0 ax)) 41 {*movsi_1} (nil))
+
+(insn 101 100 102 11 forktest.c:32 (set (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -4 [0xfffffffc])) [0 execcode+0 S4 A32])
+        (reg:SI 58 [ execcode.6 ])) 41 {*movsi_1} (nil))
+;; End of basic block 11 -> ( 12)
+
+;; Succ edge  12 (fallthru)
+
+;; Start of basic block ( 11 10) -> 12
+;; Pred edge  11 (fallthru)
+;; Pred edge  10 [100.0%] 
+(code_label 102 101 103 12 9 "" [1 uses])
+
+(note 103 102 104 12 [bb 12] NOTE_INSN_BASIC_BLOCK)
+
+(insn 104 103 105 12 forktest.c:34 (set (reg:CCZ 17 flags)
+        (compare:CCZ (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                    (const_int -4 [0xfffffffc])) [0 execcode+0 S4 A32])
+            (const_int -1 [0xffffffff]))) 2 {*cmpsi_1_insn} (nil))
+
+(jump_insn 105 104 106 12 forktest.c:34 (set (pc)
+        (if_then_else (ne (reg:CCZ 17 flags)
+                (const_int 0 [0x0]))
+            (label_ref:SI 154)
+            (pc))) 442 {*jcc_1} (nil))
+;; End of basic block 12 -> ( 13 18)
+
+;; Succ edge  13 (fallthru)
+;; Succ edge  18
+
+;; Start of basic block ( 12) -> 13
+;; Pred edge  12 (fallthru)
+(note 106 105 107 13 [bb 13] NOTE_INSN_BASIC_BLOCK)
+
+(insn 107 106 108 13 forktest.c:35 (set (reg/f:SI 90)
+        (plus:SI (reg:SI 3 bx)
+            (const:SI (unspec:SI [
+                        (symbol_ref/f:SI ("*.LC6") [flags 0x2] <string_cst 0x4035a398>)
+                    ] 1)))) 209 {*lea_1} (expr_list:REG_EQUAL (symbol_ref/f:SI ("*.LC6") [flags 0x2] <string_cst 0x4035a398>)
+        (nil)))
+
+(insn 108 107 109 13 forktest.c:35 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 90)) 41 {*movsi_1} (nil))
+
+(call_insn 109 108 147 13 forktest.c:35 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("puts") [flags 0x41] <function_decl 0x40266280 __builtin_puts>) [0 S1 A8])
+            (const_int 4 [0x4]))) 683 {*call_value_0} (nil)
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(jump_insn 147 109 148 13 forktest.c:36 (set (pc)
+        (label_ref 135)) -1 (nil))
+;; End of basic block 13 -> ( 17)
+
+;; Succ edge  17 [100.0%] 
+
+(barrier 148 147 116)
+
+;; Start of basic block ( 8) -> 14
+;; Pred edge  8
+(code_label 116 148 117 14 7 "" [1 uses])
+
+(note 117 116 118 14 [bb 14] NOTE_INSN_BASIC_BLOCK)
+
+(insn 118 117 119 14 forktest.c:39 (set (reg:CCGOC 17 flags)
+        (compare:CCGOC (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                    (const_int -8 [0xfffffff8])) [0 pid+0 S4 A32])
+            (const_int 0 [0x0]))) 0 {*cmpsi_ccno_1} (nil))
+
+(jump_insn 119 118 120 14 forktest.c:39 (set (pc)
+        (if_then_else (ge (reg:CCGOC 17 flags)
+                (const_int 0 [0x0]))
+            (label_ref 126)
+            (pc))) 442 {*jcc_1} (nil))
+;; End of basic block 14 -> ( 15 16)
+
+;; Succ edge  15 (fallthru)
+;; Succ edge  16
+
+;; Start of basic block ( 14) -> 15
+;; Pred edge  14 (fallthru)
+(note 120 119 121 15 [bb 15] NOTE_INSN_BASIC_BLOCK)
+
+(insn 121 120 122 15 forktest.c:40 (set (reg/f:SI 91)
+        (plus:SI (reg:SI 3 bx)
+            (const:SI (unspec:SI [
+                        (symbol_ref/f:SI ("*.LC7") [flags 0x2] <string_cst 0x4035a460>)
+                    ] 1)))) 209 {*lea_1} (expr_list:REG_EQUAL (symbol_ref/f:SI ("*.LC7") [flags 0x2] <string_cst 0x4035a460>)
+        (nil)))
+
+(insn 122 121 123 15 forktest.c:40 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 91)) 41 {*movsi_1} (nil))
+
+(call_insn 123 122 149 15 forktest.c:40 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("puts") [flags 0x41] <function_decl 0x40266280 __builtin_puts>) [0 S1 A8])
+            (const_int 4 [0x4]))) 683 {*call_value_0} (nil)
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(jump_insn 149 123 150 15 forktest.c:41 (set (pc)
+        (label_ref 135)) -1 (nil))
+;; End of basic block 15 -> ( 17)
+
+;; Succ edge  17 [100.0%] 
+
+(barrier 150 149 126)
+
+;; Start of basic block ( 14) -> 16
+;; Pred edge  14
+(code_label 126 150 127 16 11 "" [1 uses])
+
+(note 127 126 128 16 [bb 16] NOTE_INSN_BASIC_BLOCK)
+
+(insn 128 127 129 16 forktest.c:44 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (const_int 0 [0x0])) 41 {*movsi_1} (nil))
+
+(call_insn 129 128 151 16 forktest.c:44 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("wait") [flags 0x41] <function_decl 0x4032fa80 wait>) [0 S1 A8])
+            (const_int 4 [0x4]))) 683 {*call_value_0} (nil)
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(jump_insn 151 129 152 16 (set (pc)
+        (label_ref 135)) -1 (nil))
+;; End of basic block 16 -> ( 17)
+
+;; Succ edge  17
+
+(barrier 152 151 154)
+
+;; Start of basic block ( 12) -> 18
+;; Pred edge  12
+(code_label 154 152 153 18 13 "" [1 uses])
+
+(note 153 154 155 18 [bb 18] NOTE_INSN_BASIC_BLOCK)
+
+(insn 155 153 135 18 forktest.c:36 (const_int 0 [0x0]) -1 (nil))
+;; End of basic block 18 -> ( 17)
+
+;; Succ edge  17 [100.0%]  (fallthru)
+
+;; Start of basic block ( 15 13 18 7 16) -> 17
+;; Pred edge  15 [100.0%] 
+;; Pred edge  13 [100.0%] 
+;; Pred edge  18 [100.0%]  (fallthru)
+;; Pred edge  7 [100.0%] 
+;; Pred edge  16
+(code_label 135 155 138 17 12 "" [4 uses])
+
+(note 138 135 0 17 [bb 17] NOTE_INSN_BASIC_BLOCK)
+;; End of basic block 17 -> ( 1)
+
+;; Succ edge  EXIT [100.0%]  (fallthru)
+
+
+;; Function main (main)[0:14]
+
+Reordered sequence:
+ 2 bb 2  [0]
+ 3 bb 3  [0]
+ 4 bb 4  [0]
+ 5 bb 5  [0]
+ 6 bb 6  [0]
+ 7 bb 7  [0]
+(note 1 0 3 NOTE_INSN_DELETED)
+
+;; Start of basic block ( 0) -> 2
+;; Pred edge  ENTRY (fallthru)
+(note 3 1 139 2 [bb 2] NOTE_INSN_BASIC_BLOCK)
+
+(insn/f 139 3 2 2 (set (reg:SI 128)
+        (reg:SI 2 cx)) 41 {*movsi_1} (nil))
+
+(note 2 139 5 2 NOTE_INSN_FUNCTION_BEG)
+
+(insn 5 2 6 2 forktest.c:50 (set (reg:SI 100)
+        (reg/f:SI 7 sp)) 41 {*movsi_1} (nil))
+
+(insn 6 5 7 2 forktest.c:50 (set (reg/f:SI 58 [ saved_stack.20 ])
+        (reg:SI 100)) 41 {*movsi_1} (nil))
+
+(insn 7 6 8 2 forktest.c:52 (set (reg:SI 102)
+        (mem/c/i:SI (reg:SI 128) [0 argc+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 8 7 9 2 forktest.c:52 (parallel [
+            (set (reg:SI 101)
+                (plus:SI (reg:SI 102)
+                    (const_int -3 [0xfffffffd])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+
+(insn 9 8 10 2 forktest.c:52 (set (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -8 [0xfffffff8])) [0 size_cmdline+0 S4 A32])
+        (reg:SI 101)) 41 {*movsi_1} (expr_list:REG_EQUAL (plus:SI (mem/c/i:SI (reg:SI 128) [0 argc+0 S4 A32])
+            (const_int -3 [0xfffffffd]))
+        (nil)))
+
+(insn 10 9 11 2 forktest.c:53 (set (reg:SI 98 [ size_cmdline.7 ])
+        (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -8 [0xfffffff8])) [0 size_cmdline+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 11 10 12 2 forktest.c:53 (parallel [
+            (set (reg:SI 97 [ D.2856 ])
+                (plus:SI (reg:SI 98 [ size_cmdline.7 ])
+                    (const_int -1 [0xffffffff])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+
+(insn 12 11 13 2 forktest.c:53 (set (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -16 [0xfffffff0])) [0 D.2857+0 S4 A32])
+        (reg:SI 97 [ D.2856 ])) 41 {*movsi_1} (nil))
+
+(insn 13 12 14 2 forktest.c:53 (set (reg:SI 96 [ size_cmdline.8 ])
+        (reg:SI 98 [ size_cmdline.7 ])) 41 {*movsi_1} (nil))
+
+(insn 14 13 15 2 forktest.c:53 (parallel [
+            (set (reg:DI 95 [ D.2859 ])
+                (zero_extend:DI (reg:SI 96 [ size_cmdline.8 ])))
+            (clobber (reg:CC 17 flags))
+        ]) 89 {zero_extendsidi2_32} (nil))
+
+(insn 15 14 16 2 forktest.c:53 (parallel [
+            (set (subreg:SI (reg:DI 103) 0)
+                (and:SI (subreg:SI (reg:DI 95 [ D.2859 ]) 0)
+                    (const_int -1 [0xffffffff])))
+            (clobber (reg:CC 17 flags))
+        ]) 273 {*andsi_1} (nil))
+
+(insn 16 15 17 2 forktest.c:53 (parallel [
+            (set (subreg:SI (reg:DI 103) 4)
+                (and:SI (subreg:SI (reg:DI 95 [ D.2859 ]) 4)
+                    (const_int 15 [0xf])))
+            (clobber (reg:CC 17 flags))
+        ]) 273 {*andsi_1} (nil))
+
+(insn 17 16 18 2 forktest.c:53 (set (reg:DI 95 [ D.2859 ])
+        (reg:DI 103)) 63 {*movdi_2} (nil))
+
+(insn 18 17 19 2 forktest.c:53 (parallel [
+            (set (reg:DI 94 [ D.2860 ])
+                (ashift:DI (reg:DI 95 [ D.2859 ])
+                    (const_int 5 [0x5])))
+            (clobber (reg:CC 17 flags))
+        ]) 356 {*ashldi3_1} (nil))
+
+(insn 19 18 20 2 forktest.c:53 (parallel [
+            (set (subreg:SI (reg:DI 104) 0)
+                (and:SI (subreg:SI (reg:DI 94 [ D.2860 ]) 0)
+                    (const_int -1 [0xffffffff])))
+            (clobber (reg:CC 17 flags))
+        ]) 273 {*andsi_1} (nil))
+
+(insn 20 19 21 2 forktest.c:53 (parallel [
+            (set (subreg:SI (reg:DI 104) 4)
+                (and:SI (subreg:SI (reg:DI 94 [ D.2860 ]) 4)
+                    (const_int 15 [0xf])))
+            (clobber (reg:CC 17 flags))
+        ]) 273 {*andsi_1} (nil))
+
+(insn 21 20 24 2 forktest.c:53 (set (reg:DI 94 [ D.2860 ])
+        (reg:DI 104)) 63 {*movdi_2} (nil))
+
+(insn 24 21 25 2 forktest.c:53 (set (reg:SI 91 [ size_cmdline.10 ])
+        (reg:SI 98 [ size_cmdline.7 ])) 41 {*movsi_1} (nil))
+
+(insn 25 24 26 2 forktest.c:53 (parallel [
+            (set (reg:DI 90 [ D.2864 ])
+                (zero_extend:DI (reg:SI 91 [ size_cmdline.10 ])))
+            (clobber (reg:CC 17 flags))
+        ]) 89 {zero_extendsidi2_32} (nil))
+
+(insn 26 25 27 2 forktest.c:53 (parallel [
+            (set (subreg:SI (reg:DI 105) 0)
+                (and:SI (subreg:SI (reg:DI 90 [ D.2864 ]) 0)
+                    (const_int -1 [0xffffffff])))
+            (clobber (reg:CC 17 flags))
+        ]) 273 {*andsi_1} (nil))
+
+(insn 27 26 28 2 forktest.c:53 (parallel [
+            (set (subreg:SI (reg:DI 105) 4)
+                (and:SI (subreg:SI (reg:DI 90 [ D.2864 ]) 4)
+                    (const_int 15 [0xf])))
+            (clobber (reg:CC 17 flags))
+        ]) 273 {*andsi_1} (nil))
+
+(insn 28 27 29 2 forktest.c:53 (set (reg:DI 90 [ D.2864 ])
+        (reg:DI 105)) 63 {*movdi_2} (nil))
+
+(insn 29 28 30 2 forktest.c:53 (parallel [
+            (set (reg:DI 89 [ D.2865 ])
+                (ashift:DI (reg:DI 90 [ D.2864 ])
+                    (const_int 5 [0x5])))
+            (clobber (reg:CC 17 flags))
+        ]) 356 {*ashldi3_1} (nil))
+
+(insn 30 29 31 2 forktest.c:53 (parallel [
+            (set (subreg:SI (reg:DI 106) 0)
+                (and:SI (subreg:SI (reg:DI 89 [ D.2865 ]) 0)
+                    (const_int -1 [0xffffffff])))
+            (clobber (reg:CC 17 flags))
+        ]) 273 {*andsi_1} (nil))
+
+(insn 31 30 32 2 forktest.c:53 (parallel [
+            (set (subreg:SI (reg:DI 106) 4)
+                (and:SI (subreg:SI (reg:DI 89 [ D.2865 ]) 4)
+                    (const_int 15 [0xf])))
+            (clobber (reg:CC 17 flags))
+        ]) 273 {*andsi_1} (nil))
+
+(insn 32 31 33 2 forktest.c:53 (set (reg:DI 89 [ D.2865 ])
+        (reg:DI 106)) 63 {*movdi_2} (nil))
+
+(insn 33 32 34 2 forktest.c:53 (set (reg:SI 88 [ size_cmdline.11 ])
+        (reg:SI 98 [ size_cmdline.7 ])) 41 {*movsi_1} (nil))
+
+(insn 34 33 35 2 forktest.c:53 (parallel [
+            (set (reg:SI 87 [ D.2867 ])
+                (ashift:SI (reg:SI 88 [ size_cmdline.11 ])
+                    (const_int 2 [0x2])))
+            (clobber (reg:CC 17 flags))
+        ]) 358 {*ashlsi3_1} (nil))
+
+(insn 35 34 36 2 forktest.c:53 (parallel [
+            (set (reg:SI 107)
+                (plus:SI (reg:SI 87 [ D.2867 ])
+                    (const_int 15 [0xf])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+
+(insn 36 35 37 2 forktest.c:53 (parallel [
+            (set (reg:SI 108)
+                (plus:SI (reg:SI 107)
+                    (const_int 15 [0xf])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+
+(insn 37 36 38 2 forktest.c:53 (parallel [
+            (set (reg:SI 109)
+                (lshiftrt:SI (reg:SI 108)
+                    (const_int 4 [0x4])))
+            (clobber (reg:CC 17 flags))
+        ]) 396 {*lshrsi3_1} (expr_list:REG_EQUAL (udiv:SI (reg:SI 108)
+            (const_int 16 [0x10]))
+        (nil)))
+
+(insn 38 37 39 2 forktest.c:53 (parallel [
+            (set (reg:SI 110)
+                (ashift:SI (reg:SI 109)
+                    (const_int 4 [0x4])))
+            (clobber (reg:CC 17 flags))
+        ]) 358 {*ashlsi3_1} (nil))
+
+(insn 39 38 140 2 forktest.c:53 (parallel [
+            (set (reg/f:SI 7 sp)
+                (minus:SI (reg/f:SI 7 sp)
+                    (reg:SI 110)))
+            (clobber (reg:CC 17 flags))
+        ]) 237 {*subsi_1} (nil))
+
+(insn 140 39 41 2 forktest.c:53 (parallel [
+            (set (reg/f:SI 86 [ D.2869 ])
+                (plus:SI (reg/f:SI 7 sp)
+                    (const_int 16 [0x10])))
+            (clobber (reg:CC 17 flags))
+        ]) -1 (nil))
+
+(insn 41 140 42 2 forktest.c:53 (parallel [
+            (set (reg:SI 111)
+                (plus:SI (reg/f:SI 86 [ D.2869 ])
+                    (const_int 15 [0xf])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+
+(insn 42 41 43 2 forktest.c:53 (parallel [
+            (set (reg:SI 112)
+                (lshiftrt:SI (reg:SI 111)
+                    (const_int 4 [0x4])))
+            (clobber (reg:CC 17 flags))
+        ]) 396 {*lshrsi3_1} (expr_list:REG_EQUAL (udiv:SI (reg:SI 111)
+            (const_int 16 [0x10]))
+        (nil)))
+
+(insn 43 42 44 2 forktest.c:53 (parallel [
+            (set (reg:SI 113)
+                (ashift:SI (reg:SI 112)
+                    (const_int 4 [0x4])))
+            (clobber (reg:CC 17 flags))
+        ]) 358 {*ashlsi3_1} (nil))
+
+(insn 44 43 45 2 forktest.c:53 (set (reg/f:SI 86 [ D.2869 ])
+        (reg:SI 113)) 41 {*movsi_1} (nil))
+
+(insn 45 44 46 2 forktest.c:53 (set (mem/f/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -12 [0xfffffff4])) [0 cmdline.12+0 S4 A32])
+        (reg/f:SI 86 [ D.2869 ])) 41 {*movsi_1} (nil))
+
+(insn 46 45 141 2 forktest.c:55 (set (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -4 [0xfffffffc])) [0 i+0 S4 A32])
+        (const_int 0 [0x0])) 41 {*movsi_1} (nil))
+
+(jump_insn 141 46 142 2 forktest.c:55 (set (pc)
+        (label_ref 90)) -1 (nil))
+;; End of basic block 2 -> ( 4)
+
+;; Succ edge  4 [100.0%] 
+
+(barrier 142 141 92)
+
+;; Start of basic block ( 4) -> 3
+;; Pred edge  4
+(code_label 92 142 49 3 16 "" [1 uses])
+
+(note 49 92 50 3 [bb 3] NOTE_INSN_BASIC_BLOCK)
+
+(insn 50 49 51 3 forktest.c:56 (set (reg:SI 85 [ i.13 ])
+        (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -4 [0xfffffffc])) [0 i+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 51 50 52 3 forktest.c:56 (set (reg:SI 84 [ i.14 ])
+        (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -4 [0xfffffffc])) [0 i+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 52 51 53 3 forktest.c:56 (parallel [
+            (set (reg:SI 83 [ D.2872 ])
+                (plus:SI (reg:SI 84 [ i.14 ])
+                    (const_int 3 [0x3])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+
+(insn 53 52 54 3 forktest.c:56 (parallel [
+            (set (reg:SI 82 [ D.2873 ])
+                (ashift:SI (reg:SI 83 [ D.2872 ])
+                    (const_int 2 [0x2])))
+            (clobber (reg:CC 17 flags))
+        ]) 358 {*ashlsi3_1} (nil))
+
+(insn 54 53 55 3 forktest.c:56 (parallel [
+            (set (reg/f:SI 81 [ D.2874 ])
+                (plus:SI (reg:SI 82 [ D.2873 ])
+                    (mem/f/c/i:SI (plus:SI (reg:SI 128)
+                            (const_int 4 [0x4])) [0 argv+0 S4 A32])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+
+(insn 55 54 56 3 forktest.c:56 (set (reg/f:SI 80 [ D.2875 ])
+        (mem/f:SI (reg/f:SI 81 [ D.2874 ]) [0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 56 55 57 3 forktest.c:56 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 80 [ D.2875 ])) 41 {*movsi_1} (nil))
+
+(call_insn/i 57 56 58 3 forktest.c:56 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("strlen") [flags 0x41] <function_decl 0x4025fb00 strlen>) [0 S1 A8])
+            (const_int 4 [0x4]))) 683 {*call_value_0} (expr_list:REG_EH_REGION (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (expr_list:REG_DEP_TRUE (use (mem/f/i:SI (reg/f:SI 7 sp) [0 S4 A32]))
+            (nil))))
+
+(insn 58 57 59 3 forktest.c:56 (set (reg:SI 114)
+        (reg:SI 0 ax)) 41 {*movsi_1} (nil))
+
+(insn 59 58 60 3 forktest.c:56 (set (reg:SI 115)
+        (reg:SI 114)) 41 {*movsi_1} (nil))
+
+(insn 60 59 61 3 forktest.c:56 (set (reg:SI 79 [ D.2876 ])
+        (reg:SI 115)) 41 {*movsi_1} (nil))
+
+(insn 61 60 62 3 forktest.c:56 (parallel [
+            (set (reg:SI 78 [ D.2877 ])
+                (plus:SI (reg:SI 79 [ D.2876 ])
+                    (const_int 1 [0x1])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+
+(insn 62 61 63 3 forktest.c:56 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg:SI 78 [ D.2877 ])) 41 {*movsi_1} (nil))
+
+(call_insn 63 62 64 3 forktest.c:56 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("malloc") [flags 0x41] <function_decl 0x40276a80 malloc>) [0 S1 A8])
+            (const_int 4 [0x4]))) 683 {*call_value_0} (expr_list:REG_EH_REGION (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(insn 64 63 65 3 forktest.c:56 (set (reg/f:SI 116)
+        (reg:SI 0 ax)) 41 {*movsi_1} (expr_list:REG_NOALIAS (reg/f:SI 116)
+        (nil)))
+
+(insn 65 64 66 3 forktest.c:56 (set (reg/f:SI 77 [ D.2878 ])
+        (reg/f:SI 116)) 41 {*movsi_1} (nil))
+
+(insn 66 65 67 3 forktest.c:56 (set (reg/f:SI 76 [ D.2879 ])
+        (reg/f:SI 77 [ D.2878 ])) 41 {*movsi_1} (nil))
+
+(insn 67 66 68 3 forktest.c:56 (set (reg/f:SI 117)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -12 [0xfffffff4])) [0 cmdline.12+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 68 67 69 3 forktest.c:56 (set (mem/s/f/j:SI (plus:SI (mult:SI (reg:SI 85 [ i.13 ])
+                    (const_int 4 [0x4]))
+                (reg/f:SI 117)) [0 S4 A32])
+        (reg/f:SI 76 [ D.2879 ])) 41 {*movsi_1} (nil))
+
+(insn 69 68 70 3 forktest.c:57 (set (reg:SI 75 [ i.15 ])
+        (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -4 [0xfffffffc])) [0 i+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 70 69 71 3 forktest.c:57 (parallel [
+            (set (reg:SI 74 [ D.2881 ])
+                (plus:SI (reg:SI 75 [ i.15 ])
+                    (const_int 3 [0x3])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+
+(insn 71 70 72 3 forktest.c:57 (parallel [
+            (set (reg:SI 73 [ D.2882 ])
+                (ashift:SI (reg:SI 74 [ D.2881 ])
+                    (const_int 2 [0x2])))
+            (clobber (reg:CC 17 flags))
+        ]) 358 {*ashlsi3_1} (nil))
+
+(insn 72 71 73 3 forktest.c:57 (parallel [
+            (set (reg/f:SI 72 [ D.2883 ])
+                (plus:SI (reg:SI 73 [ D.2882 ])
+                    (mem/f/c/i:SI (plus:SI (reg:SI 128)
+                            (const_int 4 [0x4])) [0 argv+0 S4 A32])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+
+(insn 73 72 74 3 forktest.c:57 (set (reg/f:SI 71 [ D.2884 ])
+        (mem/f:SI (reg/f:SI 72 [ D.2883 ]) [0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 74 73 75 3 forktest.c:57 (set (reg:SI 70 [ i.16 ])
+        (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -4 [0xfffffffc])) [0 i+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 75 74 76 3 forktest.c:57 (set (reg/f:SI 118)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -12 [0xfffffff4])) [0 cmdline.12+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 76 75 77 3 forktest.c:57 (set (reg/f:SI 69 [ D.2886 ])
+        (mem/s/f/j:SI (plus:SI (mult:SI (reg:SI 70 [ i.16 ])
+                    (const_int 4 [0x4]))
+                (reg/f:SI 118)) [0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 77 76 78 3 forktest.c:57 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 4 [0x4])) [0 S4 A32])
+        (reg/f:SI 71 [ D.2884 ])) 41 {*movsi_1} (nil))
+
+(insn 78 77 79 3 forktest.c:57 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 69 [ D.2886 ])) 41 {*movsi_1} (nil))
+
+(call_insn 79 78 80 3 forktest.c:57 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("strcpy") [flags 0x41] <function_decl 0x4025f700 strcpy>) [0 S1 A8])
+            (const_int 8 [0x8]))) 683 {*call_value_0} (expr_list:REG_EH_REGION (const_int 0 [0x0])
+        (nil))
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(insn 80 79 81 3 forktest.c:58 (set (reg:SI 68 [ i.17 ])
+        (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -4 [0xfffffffc])) [0 i+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 81 80 82 3 forktest.c:58 (set (reg/f:SI 119)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -12 [0xfffffff4])) [0 cmdline.12+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 82 81 83 3 forktest.c:58 (set (reg/f:SI 67 [ D.2888 ])
+        (mem/s/f/j:SI (plus:SI (mult:SI (reg:SI 68 [ i.17 ])
+                    (const_int 4 [0x4]))
+                (reg/f:SI 119)) [0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 83 82 84 3 forktest.c:58 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 8 [0x8])) [0 S4 A32])
+        (reg/f:SI 67 [ D.2888 ])) 41 {*movsi_1} (nil))
+
+(insn 84 83 85 3 forktest.c:58 (set (reg:SI 120)
+        (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -4 [0xfffffffc])) [0 i+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 85 84 86 3 forktest.c:58 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 4 [0x4])) [0 S4 A32])
+        (reg:SI 120)) 41 {*movsi_1} (nil))
+
+(insn 86 85 87 3 forktest.c:58 (set (reg/f:SI 121)
+        (plus:SI (reg:SI 3 bx)
+            (const:SI (unspec:SI [
+                        (symbol_ref/f:SI ("*.LC8") [flags 0x2] <string_cst 0x40358738>)
+                    ] 1)))) 209 {*lea_1} (expr_list:REG_EQUAL (symbol_ref/f:SI ("*.LC8") [flags 0x2] <string_cst 0x40358738>)
+        (nil)))
+
+(insn 87 86 88 3 forktest.c:58 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 121)) 41 {*movsi_1} (nil))
+
+(call_insn 88 87 89 3 forktest.c:58 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("printf") [flags 0x41] <function_decl 0x40263f00 printf>) [0 S1 A8])
+            (const_int 12 [0xc]))) 683 {*call_value_0} (nil)
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(insn 89 88 90 3 forktest.c:55 discrim 2 (parallel [
+            (set (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                        (const_int -4 [0xfffffffc])) [0 i+0 S4 A32])
+                (plus:SI (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                            (const_int -4 [0xfffffffc])) [0 i+0 S4 A32])
+                    (const_int 1 [0x1])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (nil))
+;; End of basic block 3 -> ( 4)
+
+;; Succ edge  4 (fallthru)
+
+;; Start of basic block ( 3 2) -> 4
+;; Pred edge  3 (fallthru)
+;; Pred edge  2 [100.0%] 
+(code_label 90 89 91 4 15 "" [1 uses])
+
+(note 91 90 93 4 [bb 4] NOTE_INSN_BASIC_BLOCK)
+
+(insn 93 91 94 4 forktest.c:55 discrim 1 (set (reg:SI 122)
+        (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -4 [0xfffffffc])) [0 i+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 94 93 95 4 forktest.c:55 discrim 1 (set (reg:CCGC 17 flags)
+        (compare:CCGC (reg:SI 122)
+            (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                    (const_int -8 [0xfffffff8])) [0 size_cmdline+0 S4 A32]))) 2 {*cmpsi_1_insn} (nil))
+
+(jump_insn 95 94 96 4 forktest.c:55 discrim 1 (set (pc)
+        (if_then_else (lt (reg:CCGC 17 flags)
+                (const_int 0 [0x0]))
+            (label_ref 92)
+            (pc))) 442 {*jcc_1} (nil))
+;; End of basic block 4 -> ( 3 5)
+
+;; Succ edge  3
+;; Succ edge  5 (fallthru)
+
+;; Start of basic block ( 4) -> 5
+;; Pred edge  4 (fallthru)
+(note 96 95 97 5 [bb 5] NOTE_INSN_BASIC_BLOCK)
+
+(insn 97 96 98 5 forktest.c:60 (set (reg:SI 66 [ size_cmdline.18 ])
+        (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -8 [0xfffffff8])) [0 size_cmdline+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 98 97 99 5 forktest.c:60 (set (reg/f:SI 123)
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -12 [0xfffffff4])) [0 cmdline.12+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 99 98 100 5 forktest.c:60 (set (mem/s/f/j:SI (plus:SI (mult:SI (reg:SI 66 [ size_cmdline.18 ])
+                    (const_int 4 [0x4]))
+                (reg/f:SI 123)) [0 S4 A32])
+        (const_int 0 [0x0])) 41 {*movsi_1} (nil))
+
+(insn 100 99 101 5 forktest.c:61 (set (reg:CCNO 17 flags)
+        (compare:CCNO (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                    (const_int -8 [0xfffffff8])) [0 size_cmdline+0 S4 A32])
+            (const_int 0 [0x0]))) 0 {*cmpsi_ccno_1} (nil))
+
+(jump_insn 101 100 102 5 forktest.c:61 (set (pc)
+        (if_then_else (le (reg:CCNO 17 flags)
+                (const_int 0 [0x0]))
+            (label_ref 119)
+            (pc))) 442 {*jcc_1} (nil))
+;; End of basic block 5 -> ( 6 7)
+
+;; Succ edge  6 (fallthru)
+;; Succ edge  7
+
+;; Start of basic block ( 5) -> 6
+;; Pred edge  5 (fallthru)
+(note 102 101 103 6 [bb 6] NOTE_INSN_BASIC_BLOCK)
+
+(insn 103 102 104 6 forktest.c:62 (set (reg/f:SI 65 [ cmdline.19 ])
+        (mem/f/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -12 [0xfffffff4])) [0 cmdline.12+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 104 103 105 6 forktest.c:62 (set (reg/f:SI 124)
+        (mem/f/c/i:SI (plus:SI (reg:SI 128)
+                (const_int 4 [0x4])) [0 argv+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 105 104 106 6 forktest.c:62 (parallel [
+            (set (reg/f:SI 64 [ D.2893 ])
+                (plus:SI (reg/f:SI 124)
+                    (const_int 8 [0x8])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (expr_list:REG_EQUAL (plus:SI (mem/f/c/i:SI (plus:SI (reg:SI 128)
+                    (const_int 4 [0x4])) [0 argv+0 S4 A32])
+            (const_int 8 [0x8]))
+        (nil)))
+
+(insn 106 105 107 6 forktest.c:62 (set (reg/f:SI 63 [ D.2894 ])
+        (mem/f:SI (reg/f:SI 64 [ D.2893 ]) [0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 107 106 108 6 forktest.c:62 (set (reg/f:SI 125)
+        (mem/f/c/i:SI (plus:SI (reg:SI 128)
+                (const_int 4 [0x4])) [0 argv+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 108 107 109 6 forktest.c:62 (parallel [
+            (set (reg/f:SI 62 [ D.2895 ])
+                (plus:SI (reg/f:SI 125)
+                    (const_int 4 [0x4])))
+            (clobber (reg:CC 17 flags))
+        ]) 213 {*addsi_1} (expr_list:REG_EQUAL (plus:SI (mem/f/c/i:SI (plus:SI (reg:SI 128)
+                    (const_int 4 [0x4])) [0 argv+0 S4 A32])
+            (const_int 4 [0x4]))
+        (nil)))
+
+(insn 109 108 110 6 forktest.c:62 (set (reg/f:SI 61 [ D.2896 ])
+        (mem/f:SI (reg/f:SI 62 [ D.2895 ]) [0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 110 109 111 6 forktest.c:62 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg/f:SI 61 [ D.2896 ])) 41 {*movsi_1} (nil))
+
+(call_insn 111 110 112 6 forktest.c:62 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:SI ("atoi") [flags 0x41] <function_decl 0x4032fb80 atoi>) [0 S1 A8])
+            (const_int 4 [0x4]))) 683 {*call_value_0} (nil)
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+
+(insn 112 111 113 6 forktest.c:62 (set (reg:SI 60 [ D.2897 ])
+        (reg:SI 0 ax)) 41 {*movsi_1} (nil))
+
+(insn 113 112 114 6 forktest.c:62 (set (reg:SI 126)
+        (mem/c/i:SI (plus:SI (reg/f:SI 20 frame)
+                (const_int -8 [0xfffffff8])) [0 size_cmdline+0 S4 A32])) 41 {*movsi_1} (nil))
+
+(insn 114 113 115 6 forktest.c:62 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 12 [0xc])) [0 S4 A32])
+        (reg:SI 126)) 41 {*movsi_1} (nil))
+
+(insn 115 114 116 6 forktest.c:62 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 8 [0x8])) [0 S4 A32])
+        (reg/f:SI 65 [ cmdline.19 ])) 41 {*movsi_1} (nil))
+
+(insn 116 115 117 6 forktest.c:62 (set (mem:SI (plus:SI (reg/f:SI 7 sp)
+                (const_int 4 [0x4])) [0 S4 A32])
+        (reg/f:SI 63 [ D.2894 ])) 41 {*movsi_1} (nil))
+
+(insn 117 116 118 6 forktest.c:62 (set (mem:SI (reg/f:SI 7 sp) [0 S4 A32])
+        (reg:SI 60 [ D.2897 ])) 41 {*movsi_1} (nil))
+
+(call_insn 118 117 119 6 forktest.c:62 (call (mem:QI (symbol_ref:SI ("testfork") [flags 0x1] <function_decl 0x4032fa00 testfork>) [0 S1 A8])
+        (const_int 16 [0x10])) 467 {*call_0} (nil)
+    (expr_list:REG_DEP_TRUE (use (reg:SI 3 bx))
+        (nil)))
+;; End of basic block 6 -> ( 7)
+
+;; Succ edge  7 (fallthru)
+
+;; Start of basic block ( 5 6) -> 7
+;; Pred edge  5
+;; Pred edge  6 (fallthru)
+(code_label 119 118 120 7 17 "" [1 uses])
+
+(note 120 119 121 7 [bb 7] NOTE_INSN_BASIC_BLOCK)
+
+(insn 121 120 122 7 forktest.c:65 (set (reg:SI 59 [ D.2898 ])
+        (const_int 0 [0x0])) 41 {*movsi_1} (nil))
+
+(insn 122 121 123 7 forktest.c:65 (clobber (mem:BLK (scratch) [0 A8])) -1 (nil))
+
+(insn 123 122 124 7 forktest.c:65 (clobber (mem:BLK (reg/f:SI 7 sp) [0 A8])) -1 (nil))
+
+(insn 124 123 125 7 forktest.c:65 (set (reg/f:SI 7 sp)
+        (reg/f:SI 58 [ saved_stack.20 ])) 41 {*movsi_1} (nil))
+
+(insn 125 124 129 7 forktest.c:66 (set (reg:SI 99 [ <result> ])
+        (reg:SI 59 [ D.2898 ])) 41 {*movsi_1} (nil))
+
+(insn 129 125 135 7 forktest.c:66 (set (reg/i:SI 0 ax)
+        (reg:SI 99 [ <result> ])) 41 {*movsi_1} (nil))
+
+(insn 135 129 0 7 forktest.c:66 (use (reg/i:SI 0 ax)) -1 (nil))
+;; End of basic block 7 -> ( 1)
+
+;; Succ edge  EXIT [100.0%]  (fallthru)
+

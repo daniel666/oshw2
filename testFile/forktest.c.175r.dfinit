@@ -1,0 +1,26 @@
+
+;; Function testfork (testfork)[0:13]
+
+verify found no changes in insn with uid = 7.
+verify found no changes in insn with uid = 11.
+verify found no changes in insn with uid = 16.
+verify found no changes in insn with uid = 23.
+verify found no changes in insn with uid = 36.
+verify found no changes in insn with uid = 41.
+verify found no changes in insn with uid = 52.
+verify found no changes in insn with uid = 63.
+verify found no changes in insn with uid = 76.
+verify found no changes in insn with uid = 85.
+verify found no changes in insn with uid = 99.
+verify found no changes in insn with uid = 109.
+verify found no changes in insn with uid = 123.
+verify found no changes in insn with uid = 129.
+
+;; Function main (main)[0:14]
+
+verify found no changes in insn with uid = 57.
+verify found no changes in insn with uid = 63.
+verify found no changes in insn with uid = 79.
+verify found no changes in insn with uid = 88.
+verify found no changes in insn with uid = 111.
+verify found no changes in insn with uid = 118.
